@@ -1,5 +1,6 @@
 local Animate = class('Animate')
 
+
 function Animate:initialize(image)
     self.image = image
 
@@ -9,10 +10,6 @@ function Animate:initialize(image)
 
     self.cycle_time = 1 -- in second
     self.dt_cur = 0
-end
-
-function Animate:set_state_cur(id)
-    self.state_cur = id
 end
 
 function Animate:add_state(id, state)
@@ -31,22 +28,31 @@ function Animate:set_states(states)
     self.states = states
 end
 
+function Animate:set_state_cur(id)
+    self.state_cur = id
+    self.state_sub = 1
+end
+
 function Animate:set_cycle_time(cycle_time)
     self.cycle_time = cycle_time
 end
 
 function Animate:update(dt)
-    self.dt_cur = self.dt_cur + dt
+    if #self.states[self.state_cur] > 1 then
+        self.dt_cur = self.dt_cur + dt
 
-    if self.dt_cur > self.cycle_time / table.getn(self.states[self.state_cur])
-                     * self.state_sub then
-        self.state_sub  = self.state_sub + 1
-        if self.state_sub > table.getn(self.states[self.state_cur]) then
-            self.state_sub = 1
+        if self.dt_cur > self.cycle_time / #self.states[self.state_cur]
+                         * self.state_sub then
+            self.state_sub  = self.state_sub + 1
+            if self.state_sub > #self.states[self.state_cur] then
+                self.state_sub = 1
+            end
         end
-    end
 
-    if self.dt_cur > self.cycle_time then
+        if self.dt_cur > self.cycle_time then
+            self.dt_cur = 0
+        end
+    elseif self.dt_cur > 0 then
         self.dt_cur = 0
     end
 end

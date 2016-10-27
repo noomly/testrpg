@@ -1,6 +1,7 @@
 local SpriteSheet = class('SpriteSheet')
 
-function SpriteSheet:initialize(txt, image, quad, tile_size_x, tile_size_y)
+
+function SpriteSheet:initialize(image, quad, tile_size_x, tile_size_y)
     self.txt = txt
     self.image = image
 
