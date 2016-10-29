@@ -14,6 +14,7 @@ local TILE_SIZE_SP = 16
 local MIN_DT = 1/50
 
 -- Define local variables
+local canvas_game
 local next_time
 local player
 local monster
@@ -21,9 +22,12 @@ local world
 
 
 function love.load()
-    next_time = love.timer.getTime()
+    love.graphics.setDefaultFilter('nearest', 'nearest', 1)
 
-    love.graphics.setDefaultFilter("nearest", "nearest", 1)
+    canvas_game = love.graphics.newCanvas(love.graphics.getDimensions())
+    canvas_game:setFilter('nearest', 'nearest', 1)
+
+    next_time = love.timer.getTime()
 
     local mobs_image = love.graphics.newImage("res/mobs.png")
     local mobs_image_w, mobs_image_h = mobs_image:getDimensions()
@@ -44,13 +48,15 @@ function love.load()
     world = Bump.newWorld()
 
     local x, y = player:get_pos()
-    world:add(player, x, y, TILE_SIZE, TILE_SIZE)
+    world:add(player, x, y, TILE_SIZE_SP, TILE_SIZE_SP)
 
     local x, y = monster:get_pos()
-    world:add(monster, x, y, TILE_SIZE, TILE_SIZE)
+    world:add(monster, x, y, TILE_SIZE_SP, TILE_SIZE_SP)
 end
 
 function love.update(dt)
+    print("FPS:", love.timer.getFPS())
+
     next_time = next_time + MIN_DT
 
     player:update(dt, world)
@@ -66,12 +72,19 @@ function love.keyreleased(key, scancode)
 end
 
 function love.draw(dt)
+    --love.graphics.scale(TILE_SIZE / TILE_SIZE_SP, TILE_SIZE / TILE_SIZE_SP)
+
+    love.graphics.setCanvas(canvas_game)
+        love.graphics.clear()
+        love.graphics.setBlendMode('alpha')
+        player:draw()
+        monster:draw()
+    love.graphics.setCanvas()
+
     love.graphics.push()
-    love.graphics.scale(TILE_SIZE / TILE_SIZE_SP, TILE_SIZE / TILE_SIZE_SP)
-
-    player:draw()
-    monster:draw()
-
+        love.graphics.setBlendMode('alpha', 'premultiplied')
+        love.graphics.scale(TILE_SIZE / TILE_SIZE_SP, TILE_SIZE / TILE_SIZE_SP)
+        love.graphics.draw(canvas_game, 0, 0)
     love.graphics.pop()
 
     local cur_time = love.timer.getTime()
