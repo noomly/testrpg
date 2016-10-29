@@ -6,15 +6,18 @@ util = require('lib/util')
 local SpriteSheet = require('spritesheet')
 local Mob = require('mob')
 local Player = require('player')
+local Bump = require('lib/bump')
 
 -- Define contants
-local TILE_SIZE = 128
+TILE_SIZE = 64
 local TILE_SIZE_SP = 16
 local MIN_DT = 1/50
 
 -- Define local variables
 local next_time
-local bob
+local player
+local monster
+local world
 
 
 function love.load()
@@ -28,32 +31,46 @@ function love.load()
                         love.graphics.newQuad(0, 0, mobs_image_w, mobs_image_h,
                         mobs_image_w, mobs_image_h), 48, 64)
 
-    local girl_sp = SpriteSheet:new(mobs_image,
-                                    mobs_sp:get_quad(3, 1), TILE_SIZE_SP,
-                                    TILE_SIZE_SP)
+    local player_sp = SpriteSheet:new(mobs_image,
+                                      mobs_sp:get_quad(2, 1), TILE_SIZE_SP,
+                                      TILE_SIZE_SP)
+    player = Player:new(player_sp)
 
-    bob = Player:new(girl_sp)
+    local monster_sp = SpriteSheet:new(mobs_image,
+                                       mobs_sp:get_quad(4, 1), TILE_SIZE_SP,
+                                       TILE_SIZE_SP)
+    monster = Mob:new(monster_sp)
+
+    world = Bump.newWorld()
+
+    local x, y = player:get_pos()
+    world:add(player, x, y, TILE_SIZE, TILE_SIZE)
+
+    local x, y = monster:get_pos()
+    world:add(monster, x, y, TILE_SIZE, TILE_SIZE)
 end
 
 function love.update(dt)
     next_time = next_time + MIN_DT
 
-    bob:update(dt)
+    player:update(dt, world)
+    monster:update(dt, world)
 end
 
 function love.keypressed(key, scancode, isrepeat)
-    bob:keypressed(key, scancode, isrepeat)
+    player:keypressed(key, scancode, isrepeat)
 end
 
 function love.keyreleased(key, scancode)
-    bob:keyreleased(key, scancode)
+    player:keyreleased(key, scancode)
 end
 
 function love.draw(dt)
     love.graphics.push()
     love.graphics.scale(TILE_SIZE / TILE_SIZE_SP, TILE_SIZE / TILE_SIZE_SP)
 
-    bob:draw()
+    player:draw()
+    monster:draw()
 
     love.graphics.pop()
 

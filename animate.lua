@@ -12,6 +12,26 @@ function Animate:initialize(image)
     self.dt_cur = 0
 end
 
+function Animate:update(dt)
+    if #self.states[self.state_cur] > 1 then
+        self.dt_cur = self.dt_cur + dt
+
+        if self.dt_cur > self.cycle_time / #self.states[self.state_cur]
+                         * self.state_sub then
+            self.state_sub  = self.state_sub + 1
+            if self.state_sub > #self.states[self.state_cur] then
+                self.state_sub = 1
+            end
+        end
+
+        if self.dt_cur > self.cycle_time then
+            self.dt_cur = 0
+        end
+    elseif self.dt_cur > 0 then
+        self.dt_cur = 0
+    end
+end
+
 function Animate:add_state(id, state)
     if type(state) ~= 'table' then
         return
@@ -35,26 +55,6 @@ end
 
 function Animate:set_cycle_time(cycle_time)
     self.cycle_time = cycle_time
-end
-
-function Animate:update(dt)
-    if #self.states[self.state_cur] > 1 then
-        self.dt_cur = self.dt_cur + dt
-
-        if self.dt_cur > self.cycle_time / #self.states[self.state_cur]
-                         * self.state_sub then
-            self.state_sub  = self.state_sub + 1
-            if self.state_sub > #self.states[self.state_cur] then
-                self.state_sub = 1
-            end
-        end
-
-        if self.dt_cur > self.cycle_time then
-            self.dt_cur = 0
-        end
-    elseif self.dt_cur > 0 then
-        self.dt_cur = 0
-    end
 end
 
 function Animate:get_quad_cur()

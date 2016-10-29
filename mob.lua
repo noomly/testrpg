@@ -1,6 +1,6 @@
 local Animate = require('animate')
 
-local Mob = class('Mod')
+local Mob = class('Mob')
 
 
 function Mob:initialize(sp)
@@ -36,9 +36,13 @@ function Mob:initialize(sp)
             { 2, 2 },
         },
     })
+    self.an:set_cycle_time(0.75)
+
+    self.dt_cur = 0
+    self.speed = 32
 end
 
-function Mob:update(dt)
+function Mob:update(dt, world)
     local move_key, move_value = self:_get_move_max()
 
     if move_value ~= 0 then
@@ -47,13 +51,50 @@ function Mob:update(dt)
         self.an:set_state_cur('default')
     end
 
+    if move_key == 'left' then
+        self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x - (self.speed * dt), self.pos.y)
+        print(self.pos.x)
+        --self.pos.x = self.pos.x - (self.speed * dt)
+    elseif move_key == 'right' then
+        self.pos.x = self.pos.x + (self.speed * dt) * 4
+    elseif move_key == 'up' then
+        self.pos.y = self.pos.y - (self.speed * dt)
+    elseif move_key == 'down' then
+        self.pos.y = self.pos.y + (self.speed * dt)
+    end
+
+    if move_key ~= 'nothing' then
+        world:update(self, self.pos.x, self.pos.y)
+    end
+
+    --[[
+    if move_key ~= 'nothing' then
+        self.dt_cur = self.dt_cur + dt
+
+        if self.dt_cur > self.speed then
+            self.dt_cur = 0
+
+            if move_key == 'left' then
+                self.pos.x = self.pos.x - 1
+            elseif move_key == 'right' then
+                self.pos.x = self.pos.x + 1
+            elseif move_key == 'up' then
+                self.pos.y = self.pos.y - 1
+            elseif move_key == 'down' then
+                self.pos.y = self.pos.y + 1
+            end
+        end
+    end
+    --]]
+
     self.an:update(dt)
 end
 
 
 function Mob:draw()
     love.graphics.draw(self.sp:get_image(),
-                       self.sp:get_quad(unpack(self.an:get_quad_cur())), 0, 0)
+                       self.sp:get_quad(unpack(self.an:get_quad_cur())),
+                       self.pos.x / 4, self.pos.y / 4)
 end
 
 function Mob:_get_move_max()
@@ -72,6 +113,10 @@ function Mob:_get_move_max()
     end
 
     return move_key, move_value
+end
+
+function Mob:get_pos()
+    return self.pos.x, self.pos.y
 end
 
 
