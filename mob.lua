@@ -6,7 +6,7 @@ local Mob = class('Mob')
 function Mob:initialize(sp)
     self.sp = sp
 
-    self.pos = { x = 0, y = 0 }
+    self.pos = { x = 5 * TILE_SIZE_SP, y = 3 * TILE_SIZE_SP }
 
     self.move = { left = 0, right = 0, up = 0, down = 0 }
 
@@ -52,15 +52,18 @@ function Mob:update(dt, world)
     end
 
     if move_key == 'left' then
-        --self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x - (self.speed * dt), self.pos.y)
+        self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x - (self.speed * dt), self.pos.y)
         --print(self.pos.x)
-        self.pos.x = self.pos.x - (self.speed * dt)
+        --self.pos.x = self.pos.x - (self.speed * dt)
     elseif move_key == 'right' then
-        self.pos.x = self.pos.x + (self.speed * dt)
+        self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x + (self.speed * dt), self.pos.y)
+        --self.pos.x = self.pos.x + (self.speed * dt)
     elseif move_key == 'up' then
-        self.pos.y = self.pos.y - (self.speed * dt)
+        self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x, self.pos.y - (self.speed * dt))
+        --self.pos.y = self.pos.y - (self.speed * dt)
     elseif move_key == 'down' then
-        self.pos.y = self.pos.y + (self.speed * dt)
+        self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x, self.pos.y + (self.speed * dt))
+        --self.pos.y = self.pos.y + (self.speed * dt)
     end
 
     if move_key ~= 'nothing' then

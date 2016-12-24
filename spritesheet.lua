@@ -36,9 +36,9 @@ function SpriteSheet:get_quad(x, y)
     return self.quads[x][y]
 end
 
---[[function SpriteSheet:get_quads()
-    return self.quads
-end--]]
+function SpriteSheet:get_quads_len()
+    return { #self.quads, #self.quads[1] }
+end
 
 
 return SpriteSheet
