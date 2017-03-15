@@ -13,5 +13,23 @@ function Util.rprint(s, l, i) -- recursive Print (structure, limit, indent)
     return l
 end
 
+function Util.deepcopy( Table, Cache ) -- Makes a deep copy of a table.
+    if type( Table ) ~= 'table' then
+        return Table
+    end
+
+    Cache = Cache or {}
+    if Cache[Table] then
+        return Cache[Table]
+    end
+
+    local New = {}
+    Cache[Table] = New
+    for Key, Value in pairs( Table ) do
+        New[Util.deepcopy( Key, Cache)] = Util.deepcopy( Value, Cache )
+    end
+
+    return New
+end
 
 return Util

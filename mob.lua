@@ -6,7 +6,11 @@ local Mob = class('Mob')
 function Mob:initialize(sp)
     self.sp = sp
 
-    self.pos = { x = 5 * TILE_SIZE_SP, y = 3 * TILE_SIZE_SP }
+    self.img = { x = 2 * TILE_SIZE_O, y = 3 * TILE_SIZE_O }
+    self.bb = {} -- Bounding box
+    self:_update_bb()
+
+    self.speed = 32
 
     self.move = { left = 0, right = 0, up = 0, down = 0 }
 
@@ -37,9 +41,7 @@ function Mob:initialize(sp)
         },
     })
     self.an:set_cycle_time(0.75)
-
-    self.dt_cur = 0
-    self.speed = 32
+    self.an:set_cycle_time(0.25)
 end
 
 function Mob:update(dt, world)
@@ -52,22 +54,22 @@ function Mob:update(dt, world)
     end
 
     if move_key == 'left' then
-        self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x - (self.speed * dt), self.pos.y)
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x - (self.speed * dt), self.bb.y)
         --print(self.pos.x)
         --self.pos.x = self.pos.x - (self.speed * dt)
     elseif move_key == 'right' then
-        self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x + (self.speed * dt), self.pos.y)
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x + (self.speed * dt), self.bb.y)
         --self.pos.x = self.pos.x + (self.speed * dt)
     elseif move_key == 'up' then
-        self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x, self.pos.y - (self.speed * dt))
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y - (self.speed * dt))
         --self.pos.y = self.pos.y - (self.speed * dt)
     elseif move_key == 'down' then
-        self.pos.x, self.pos.y, cols, len = world:move(self, self.pos.x, self.pos.y + (self.speed * dt))
-        --self.pos.y = self.pos.y + (self.speed * dt)
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y + (self.speed * dt))
     end
 
     if move_key ~= 'nothing' then
-        world:update(self, self.pos.x, self.pos.y)
+        world:update(self, self.bb.x, self.bb.y)
+        self:_update_img()
     end
 
     self.an:update(dt)
@@ -77,7 +79,19 @@ end
 function Mob:draw()
     love.graphics.draw(self.sp:get_image(),
                        self.sp:get_quad(unpack(self.an:get_quad_cur())),
-                       self.pos.x, self.pos.y)
+                       self.img.x, self.img.y)
+end
+
+function Mob:_update_img()
+    self.img.x = self.bb.x - TILE_SIZE_O / 3
+    self.img.y = self.bb.y - (TILE_SIZE_O / 4) / 2
+end
+
+function Mob:_update_bb()
+    self.bb.x = self.img.x + TILE_SIZE_O / 3
+    self.bb.y = self.img.y + (TILE_SIZE_O / 4) / 2
+    self.bb.w = TILE_SIZE_O / 3
+    self.bb.h = TILE_SIZE_O - TILE_SIZE_O / 4
 end
 
 function Mob:_get_move_max()
@@ -98,8 +112,17 @@ function Mob:_get_move_max()
     return move_key, move_value
 end
 
-function Mob:get_pos()
-    return self.pos.x, self.pos.y
+function Mob:get_img()
+    return { self.img.x, self.img.y }
+end
+
+function Mob:get_bb()
+    return { self.bb.x, self.bb.y, self.bb.w, self.bb.h }
+end
+
+function Mob:get_simg() -- Get scaled image position
+    return { self.img.x * (TILE_SIZE / TILE_SIZE_O),
+             self.img.y * (TILE_SIZE / TILE_SIZE_O) }
 end
 
 

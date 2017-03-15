@@ -15,7 +15,7 @@ function SpriteSheet:initialize(image, quad, tile_size_x, tile_size_y)
     self.quads = {}
 
     local count = 0
-    for x=self.ss_x, self.ss_w - self.tile_size_x, self.tile_size_x do
+    for x = self.ss_x, self.ss_w - self.tile_size_x, self.tile_size_x do
         count = count + 1
         table.insert(self.quads, {})
         for y=self.ss_y, self.ss_h - self.tile_size_y, self.tile_size_y do

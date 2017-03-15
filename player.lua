@@ -5,6 +5,11 @@ local Player = class('Player', Mob)
 
 function Player:initialize(sp)
     Mob.initialize(self, sp)
+
+    self.img = { x = 6 * TILE_SIZE_O, y = 3 * TILE_SIZE_O }
+    self:_update_bb()
+
+    self.speed = 80
 end
 
 function Mob:keypressed(key, scancode, isrepeat)

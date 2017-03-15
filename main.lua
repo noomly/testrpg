@@ -6,6 +6,10 @@ bump = require('lib/bump')
 -- Import local classes
 local StateGame = require('state_game')
 
+-- Define constants
+TILE_SIZE_O = 16
+TILE_SIZE = 64
+
 -- Define local variables
 local game
 
@@ -17,7 +21,8 @@ function love.load()
 end
 
 function love.update(dt)
-    --print("FPS:", love.timer.getFPS())
+    io.flush()
+    print("FPS:", love.timer.getFPS())
 
     game:update(dt)
 end
@@ -36,5 +41,9 @@ end
 
 function love.draw(dt)
     game:draw(dt)
+    --local radius = 20
+    --love.graphics.circle('line', love.graphics.getWidth() / 2,
+    --    love.graphics.getHeight() / 2, radius)
+    --love.graphics.points(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 end
 

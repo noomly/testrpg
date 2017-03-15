@@ -17,7 +17,7 @@ function Animate:update(dt)
         self.dt_cur = self.dt_cur + dt
 
         if self.dt_cur > self.cycle_time / #self.states[self.state_cur]
-                         * self.state_sub then
+            * self.state_sub then
             self.state_sub  = self.state_sub + 1
             if self.state_sub > #self.states[self.state_cur] then
                 self.state_sub = 1
