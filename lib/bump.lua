@@ -1,5 +1,5 @@
 local bump = {
-  _VERSION     = 'bump v3.1.6',
+  _VERSION     = 'bump v3.1.7',
   _URL         = 'https://github.com/kikito/bump.lua',
   _DESCRIPTION = 'A collision detection library for Lua',
   _LICENSE     = [[
@@ -155,7 +155,12 @@ local function rect_detectCollision(x1,y1,w1,h1, x2,y2,w2,h2, goalX, goalY)
     local ti1,ti2,nx1,ny1 = rect_getSegmentIntersectionIndices(x,y,w,h, 0,0,dx,dy, -math.huge, math.huge)
 
     -- item tunnels into other
-    if ti1 and ti1 < 1 and (0 < ti1 + DELTA or 0 == ti1 and ti2 > 0) then
+    if ti1
+    and ti1 < 1
+    and (abs(ti1 - ti2) >= DELTA) -- special case for rect going through another rect's corner
+    and (0 < ti1 + DELTA
+      or 0 == ti1 and ti2 > 0)
+    then
       ti, nx, ny = ti1, nx1, ny1
       overlaps   = false
     end

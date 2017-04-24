@@ -1,4 +1,4 @@
-local Camera = class('Camera')
+local Camera = class("Camera")
 
 
 function Camera:initialize(cx, cy)

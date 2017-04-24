@@ -1,10 +1,10 @@
-local Animate = class('Animate')
+local Animate = class("Animate")
 
 
 function Animate:initialize(image)
     self.image = image
 
-    self.state_cur = 'default'
+    self.state_cur = "default"
     self.state_sub = 1
     self.states = { default = { { 1, 1 } } }
 
@@ -33,7 +33,7 @@ function Animate:update(dt)
 end
 
 function Animate:add_state(id, state)
-    if type(state) ~= 'table' then
+    if type(state) ~= "table" then
         return
     end
 
@@ -41,7 +41,7 @@ function Animate:add_state(id, state)
 end
 
 function Animate:set_states(states)
-    if type(states) ~= 'table' then
+    if type(states) ~= "table" then
         return
     end
 
@@ -49,8 +49,10 @@ function Animate:set_states(states)
 end
 
 function Animate:set_state_cur(id)
-    self.state_cur = id
-    self.state_sub = 1
+    if self.state_cur ~= id then
+        self.state_cur = id
+        self.state_sub = 1
+    end
 end
 
 function Animate:set_cycle_time(cycle_time)

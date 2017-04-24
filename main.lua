@@ -1,10 +1,12 @@
 -- Import global libs
-class = require('lib/middleclass')
-util = require('lib/util')
-bump = require('lib/bump')
+class = require("lib/middleclass")
+bump = require("lib/bump")
+sti = require("lib/sti")
+inspect = require("lib/inspect")
+util = require("lib/util")
 
 -- Import local classes
-local StateGame = require('state_game')
+local StateGame = require("state_game")
 
 -- Define constants
 TILE_SIZE_O = 16
@@ -15,14 +17,14 @@ local game
 
 
 function love.load()
-    love.graphics.setDefaultFilter('nearest', 'nearest', 1)
+    love.graphics.setDefaultFilter("nearest", "nearest", 1)
 
     game = StateGame:new("res/lev/level_1")
 end
 
 function love.update(dt)
     io.flush()
-    print("FPS:", love.timer.getFPS())
+    --print("FPS:", love.timer.getFPS())
 
     game:update(dt)
 end
@@ -42,7 +44,7 @@ end
 function love.draw(dt)
     game:draw(dt)
     --local radius = 20
-    --love.graphics.circle('line', love.graphics.getWidth() / 2,
+    --love.graphics.circle("line", love.graphics.getWidth() / 2,
     --    love.graphics.getHeight() / 2, radius)
     --love.graphics.points(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 end

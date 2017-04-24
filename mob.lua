@@ -1,18 +1,22 @@
-local Animate = require('animate')
+local Animate = require("animate")
 
-local Mob = class('Mob')
+local Mob = class("Mob")
 
 
 function Mob:initialize(sp)
+    self.name = "mob"
+
     self.sp = sp
 
-    self.img = { x = 2 * TILE_SIZE_O, y = 3 * TILE_SIZE_O }
-    self.bb = {} -- Bounding box
-    self:_update_bb()
+    self.bb = { x = 2 * TILE_SIZE_O, y = 3 * TILE_SIZE_O, w = TILE_SIZE_O,
+        h = TILE_SIZE_O } -- Bounding box
 
     self.speed = 32
 
     self.move = { left = 0, right = 0, up = 0, down = 0 }
+    self.moving = "standing" -- standing, left, right, up, down
+    self.moving_old = "standing"
+    self.moving_px = 0
 
     self.an = Animate:new(self.sp:get_image())
     self.an:set_states({
@@ -33,6 +37,18 @@ function Mob:initialize(sp)
             { 1, 1 },
             { 3, 1 },
         },
+        stand_left = {
+            { 2, 2 },
+        },
+        stand_right = {
+            { 2, 3 },
+        },
+        stand_up = {
+            { 2, 4 },
+        },
+        stand_down = {
+            { 2, 1 },
+        },
         rotating = {
             { 2, 1 },
             { 2, 3 },
@@ -40,58 +56,82 @@ function Mob:initialize(sp)
             { 2, 2 },
         },
     })
-    self.an:set_cycle_time(0.75)
-    self.an:set_cycle_time(0.25)
+    self.an:set_cycle_time(0.50)
 end
 
 function Mob:update(dt, world)
     local move_key, move_value = self:_get_move_max()
 
-    if move_value ~= 0 then
-        self.an:set_state_cur('walk_' .. move_key)
-    else
-        self.an:set_state_cur('default')
+    if self.moving == "standing" then
+        if move_key == "left" then
+            self.an:set_state_cur("walk_left")
+            self.moving = "left"
+        elseif move_key == "right" then
+            self.an:set_state_cur("walk_right")
+            self.moving = "right"
+        elseif move_key == "up" then
+            self.an:set_state_cur("walk_up")
+            self.moving = "up"
+        elseif move_key == "down" then
+            self.an:set_state_cur("walk_down")
+            self.moving = "down"
+        end
     end
 
-    if move_key == 'left' then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x - (self.speed * dt), self.bb.y)
-        --print(self.pos.x)
-        --self.pos.x = self.pos.x - (self.speed * dt)
-    elseif move_key == 'right' then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x + (self.speed * dt), self.bb.y)
-        --self.pos.x = self.pos.x + (self.speed * dt)
-    elseif move_key == 'up' then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y - (self.speed * dt))
-        --self.pos.y = self.pos.y - (self.speed * dt)
-    elseif move_key == 'down' then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y + (self.speed * dt))
+    if moving ~= "standing" then
+        move_px = self.speed * dt
+
+        if self.moving_px + move_px > TILE_SIZE_O then
+            move_px = TILE_SIZE_O - self.moving_px
+        end
     end
 
-    if move_key ~= 'nothing' then
+    if self.moving == "left" then
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x - move_px, self.bb.y)
+    elseif self.moving == "right" then
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x + move_px, self.bb.y)
+        if #cols > 0 then
+            print(inspect(cols[1].other.id))
+        end
+    elseif self.moving == "up" then
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y - move_px)
+    elseif self.moving == "down" then
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y + move_px)
+    end
+
+    if self.moving ~= "standing" then
+        self.moving_px = self.moving_px + move_px
+        if self.moving_px >= TILE_SIZE_O then
+            self.moving_px = 0
+
+            if move_key ~= self.moving then
+                self.moving_old = self.moving
+                self.moving = "standing"
+            end
+        end
+
         world:update(self, self.bb.x, self.bb.y)
-        self:_update_img()
+    end
+
+    if self.moving == "standing" then
+        if self.moving_old == "left" then
+            self.an:set_state_cur("stand_left")
+        elseif self.moving_old == "right" then
+            self.an:set_state_cur("stand_right")
+        elseif self.moving_old == "up" then
+            self.an:set_state_cur("stand_up")
+        elseif self.moving_old == "down" then
+            self.an:set_state_cur("stand_down")
+        end
     end
 
     self.an:update(dt)
 end
 
-
 function Mob:draw()
     love.graphics.draw(self.sp:get_image(),
                        self.sp:get_quad(unpack(self.an:get_quad_cur())),
-                       self.img.x, self.img.y)
-end
-
-function Mob:_update_img()
-    self.img.x = self.bb.x - TILE_SIZE_O / 3
-    self.img.y = self.bb.y - (TILE_SIZE_O / 4) / 2
-end
-
-function Mob:_update_bb()
-    self.bb.x = self.img.x + TILE_SIZE_O / 3
-    self.bb.y = self.img.y + (TILE_SIZE_O / 4) / 2
-    self.bb.w = TILE_SIZE_O / 3
-    self.bb.h = TILE_SIZE_O - TILE_SIZE_O / 4
+                       self.bb.x, self.bb.y)
 end
 
 function Mob:_get_move_max()
@@ -106,14 +146,10 @@ function Mob:_get_move_max()
     end
 
     if move_value == 0 then
-        move_key = 'nothing'
+        move_key = "nothing"
     end
 
     return move_key, move_value
-end
-
-function Mob:get_img()
-    return { self.img.x, self.img.y }
 end
 
 function Mob:get_bb()
@@ -121,8 +157,8 @@ function Mob:get_bb()
 end
 
 function Mob:get_simg() -- Get scaled image position
-    return { self.img.x * (TILE_SIZE / TILE_SIZE_O),
-             self.img.y * (TILE_SIZE / TILE_SIZE_O) }
+    return { self.bb.x * (TILE_SIZE / TILE_SIZE_O),
+             self.bb.y * (TILE_SIZE / TILE_SIZE_O) }
 end
 
 

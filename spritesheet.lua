@@ -1,4 +1,4 @@
-local SpriteSheet = class('SpriteSheet')
+local SpriteSheet = class("SpriteSheet")
 
 
 function SpriteSheet:initialize(image, quad, tile_size_x, tile_size_y)

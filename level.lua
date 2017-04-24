@@ -1,4 +1,4 @@
-local Level = class('Level')
+local Level = class("Level")
 
 
 -- 15 lines in spritesheet
@@ -37,7 +37,7 @@ function Level:initialize(lvl_data, world, sp)
                 (line - 1) * TILE_SIZE_O, TILE_SIZE_O, TILE_SIZE_O)
         end
     end
-    util.rprint(self.tiles)
+    --util.rprint(self.tiles)
 end
 
 function Level:draw()
