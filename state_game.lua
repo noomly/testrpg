@@ -16,7 +16,7 @@ function StateGame:initialize(level_path)
     local mobs_image_w, mobs_image_h = mobs_image:getDimensions()
     local mobs_sp = SpriteSheet:new(mobs_image,
                         love.graphics.newQuad(0, 0, mobs_image_w,
-                        mobs_image_h, mobs_image_w, mobs_image_h), 48, 64)
+                        mobs_image_h, mobs_image_w, mobs_image_h), 64, 64)
 
     local player_sp = SpriteSheet:new(mobs_image,
                                       mobs_sp:get_quad(2, 1), TILE_SIZE_O,

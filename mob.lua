@@ -86,17 +86,22 @@ function Mob:update(dt, world)
         end
     end
 
+    local cols, len
     if self.moving == "left" then
         self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x - move_px, self.bb.y)
     elseif self.moving == "right" then
         self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x + move_px, self.bb.y)
-        if #cols > 0 then
-            print(inspect(cols[1].other.id))
-        end
     elseif self.moving == "up" then
         self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y - move_px)
     elseif self.moving == "down" then
         self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y + move_px)
+    end
+
+    if len then
+        if len > 0 then
+            -- print(inspect(cols[1].other))
+            self:collide(cols)
+        end
     end
 
     if self.moving ~= "standing" then
@@ -126,6 +131,10 @@ function Mob:update(dt, world)
     end
 
     self.an:update(dt)
+end
+
+function Mob:collide(cols)
+    -- Doing nothing, extend me in subclasses
 end
 
 function Mob:draw()

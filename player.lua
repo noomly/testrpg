@@ -4,7 +4,7 @@ local Player = class("Player", Mob)
 
 
 function Player:initialize(sp)
-    Mob.initialize(self, sp)
+    Mob:initialize(sp)
 
     self.bb = { x = 6 * TILE_SIZE_O, y = 3 * TILE_SIZE_O, w = TILE_SIZE_O,
         h = TILE_SIZE_O } -- Bounding box
@@ -12,7 +12,14 @@ function Player:initialize(sp)
     self.speed = 80
 end
 
-function Mob:keypressed(key, scancode, isrepeat)
+function Player:collide(cols)
+    -- print(inspect(cols[1].other.properties)) -- TODO: continue
+    if cols[1].other.properties.door == true then
+        print("door!")
+    end
+end
+
+function Player:keypressed(key, scancode, isrepeat)
     local _, current_move_value = self:_get_move_max()
 
     if key == "left" then
@@ -26,7 +33,7 @@ function Mob:keypressed(key, scancode, isrepeat)
     end
 end
 
-function Mob:keyreleased(key, scancode)
+function Player:keyreleased(key, scancode)
     if key == "left" then
         self.move.left = 0
     elseif key == "right" then

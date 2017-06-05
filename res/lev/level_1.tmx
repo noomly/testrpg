@@ -1,103 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="39">
- <tileset firstgid="1" name="basic tileset" tilewidth="16" tileheight="16" tilecount="120" columns="8">
-  <image source="../gra/basictiles.png" width="128" height="240"/>
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="60">
+ <tileset firstgid="1" name="basic tileset" tilewidth="16" tileheight="16" tilecount="192" columns="16">
+  <image source="../gra/basictiles.png" width="256" height="192"/>
   <terraintypes>
    <terrain name="grass" tile="-1"/>
+   <terrain name="forest" tile="-1"/>
   </terraintypes>
   <tile id="0">
    <objectgroup draworder="index"/>
   </tile>
-  <tile id="11" terrain="0,0,0,0"/>
-  <tile id="12" terrain="0,0,0,0"/>
-  <tile id="64" terrain="0,0,0,0"/>
-  <tile id="65" terrain="0,0,0,0"/>
+  <tile id="24" terrain="1,1,1,1"/>
+  <tile id="25" terrain="1,1,1,1"/>
+  <tile id="30" terrain="0,0,0,0"/>
+  <tile id="31" terrain="0,0,0,0"/>
+  <tile id="40" terrain="1,1,1,1"/>
+  <tile id="46" terrain="0,0,0,0"/>
+  <tile id="47" terrain="0,0,0,0"/>
  </tileset>
- <tileset firstgid="121" name="collisions tileset" tilewidth="16" tileheight="16" tilecount="16" columns="4">
+ <tileset firstgid="193" name="collisions tileset" tilewidth="16" tileheight="16" tilecount="16" columns="4">
   <image source="../gra/collisions.png" width="64" height="64"/>
   <tile id="0">
    <properties>
     <property name="collidable" type="bool" value="true"/>
-    <property name="hide" type="bool" value="true"/>
    </properties>
   </tile>
   <tile id="1">
    <properties>
     <property name="collidable" type="bool" value="false"/>
-    <property name="hide" type="bool" value="true"/>
    </properties>
   </tile>
  </tileset>
+ <layer name="underwater" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgFtAB1UExNswareaNgFIyCkQkA9GcD8Q==
+  </data>
+ </layer>
  <layer name="ground" width="20" height="20">
-  <data encoding="csv">
-12,66,65,66,65,12,12,12,65,13,66,12,13,66,12,13,12,66,12,65,
-12,66,66,12,66,66,13,66,13,66,65,65,65,66,12,13,65,13,12,12,
-66,13,12,66,12,66,66,66,66,12,13,13,65,12,66,66,66,65,13,65,
-12,66,13,13,13,12,13,66,12,13,12,12,66,13,12,65,66,12,66,13,
-65,66,65,66,66,66,12,12,13,13,65,65,13,12,13,66,66,13,13,66,
-13,66,65,66,66,65,65,13,66,66,66,12,12,65,12,12,12,66,66,13,
-12,65,12,13,12,66,13,13,13,13,12,66,12,65,65,65,12,65,12,66,
-12,66,13,66,13,66,13,13,13,65,12,66,65,13,12,66,65,12,65,13,
-65,13,13,12,12,65,66,65,12,66,12,13,13,12,65,13,66,12,12,65,
-66,66,12,12,12,13,66,66,66,65,65,65,66,65,66,66,65,66,65,13,
-66,12,66,12,65,12,66,66,66,66,12,65,66,66,65,12,66,66,65,13,
-12,13,65,12,12,66,65,66,12,66,13,65,66,13,66,13,65,66,66,13,
-12,65,12,66,66,13,12,12,13,12,12,65,13,65,12,66,65,65,65,66,
-13,65,12,66,13,12,65,66,12,13,66,13,65,13,12,65,65,13,66,65,
-66,65,65,13,12,13,66,13,65,13,12,13,65,65,65,12,65,12,13,13,
-13,12,13,13,66,65,65,65,13,13,12,13,13,12,13,12,13,66,66,12,
-66,12,12,66,65,66,13,66,65,12,12,65,66,66,12,13,12,12,66,66,
-12,12,12,66,66,65,65,13,12,12,13,66,12,13,66,66,13,12,13,65,
-13,65,65,13,13,12,12,65,65,65,12,12,13,13,12,66,66,13,12,13,
-66,66,12,12,12,65,12,65,12,12,65,13,13,66,13,12,12,65,13,66
-</data>
+  <data encoding="base64" compression="zlib">
+   eJx9lNsNxDAIBN2J6SA0cXWl9dNJRprMQT6QEx4LLMa51rqOJL639Huwly10MoZCnA25Tmyek/UkbF1NxHP+EDb7MmbpQjix/usNYNGv6rmPlP4j2QMusUpuSMW84XU1s0fjdfXFes4617N34ody7KG+jivPIJSD/oXL2eZ69ksd78k0X+Ykh+yF/uTYdTvX5DP5vu2LxTvqvcrhjBf/jofyIb+eIWfr+2G+3IP32zbOOYZ/v0Wuv9tb9tVhd3efMVMe82t917v59RtbfJofz8+73+n8dndvBLlg//b92b8YJEMr
+  </data>
  </layer>
- <layer name="tiles" width="20" height="20">
-  <data encoding="csv">
-3221225564,0,0,0,0,0,0,0,0,0,0,0,0,0,78,0,0,0,0,0,
-1610612828,0,0,0,0,0,0,0,0,0,78,78,78,78,78,0,0,0,0,0,
-2684354652,0,0,0,0,0,0,0,0,1,1,1,1,1,1,1,0,0,0,0,
-92,0,0,0,0,0,0,0,0,1610612737,9,9,9,9,9,2684354561,0,0,0,0,
-0,0,0,0,0,0,0,0,2,1610612737,9,9,9,9,9,2684354561,0,0,0,0,
-0,0,0,78,21,0,0,0,2,2,9,9,9,9,9,2684354561,0,92,0,0,
-0,0,0,0,21,0,0,0,2,1610612737,9,9,9,9,9,2684354561,0,100,0,0,
-0,0,0,0,92,0,0,0,0,1610612737,9,9,9,9,9,2684354561,0,0,0,0,
-0,0,0,0,100,78,0,0,0,1610612737,9,9,9,9,9,2684354561,0,0,0,0,
-0,0,0,0,0,78,0,0,0,1,1,1,1,1,1,1,0,0,0,0,
-0,0,0,0,0,78,78,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,77,0,0,0,
-0,0,0,0,0,0,77,77,77,77,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,77,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
+ <layer name="road" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJxjYBgF1AT5VDbPZxCbZ0tF8+yhZgVQyTyQWX5EqCM2voj150CqsyOghpT48oeqJYSpFV+jYGgCAGVeCQM=
+  </data>
  </layer>
- <layer name="collisions" width="20" height="20" visible="0" opacity="0.26">
-  <data encoding="csv">
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,121,121,121,121,121,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,121,121,121,121,121,121,121,0,0,0,0,
-0,0,0,0,0,0,0,0,0,121,0,0,0,0,0,121,0,0,0,0,
-0,0,0,0,0,0,0,0,0,121,0,0,0,0,0,121,0,0,0,0,
-0,0,0,121,121,0,0,0,0,0,0,0,0,0,0,121,0,0,0,0,
-0,0,0,0,121,0,0,0,0,121,0,0,0,0,0,121,0,121,0,0,
-0,0,0,0,0,0,0,0,0,121,0,0,0,0,0,121,0,0,0,0,
-0,0,0,0,121,121,0,0,0,121,0,0,0,0,0,121,0,0,0,0,
-0,0,0,0,0,121,0,0,0,121,121,121,121,121,121,121,0,0,0,0,
-0,0,0,0,0,121,121,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,0,0,0,
-0,0,0,0,0,0,121,121,121,121,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,121,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,
-0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0,0
-</data>
+ <layer name="tile" width="20" height="20">
+  <data encoding="base64" compression="zlib">
+   eJylVDEOwjAMzMJA6QfCzpAdJB7AE1AnOsLGBjyiwAv4LK7kk47IThtx0imuk55dx3UKIURhUq5pZUbyR/LjvUhnagANC9Ct0SnFR95TaIXLjK2j5+V3FHZqN8KN2lfhWX3AoCvqa2mNuJBejkZ1cC/QQ35POnsT3oUPR2/rxJiqL+fCODh6pfq9yF4RF2Rb+c3tlxHviX2rX6yc8cy1sWrl9V9Nzgz8i/8i0Vr7/+YajNL9zsWObJ4VvfBksAZcv97Y78O8eux15ftlvU8hhgf0MuJb31rSGwxfPufz+Y79GH7nfCqc+QKlAxpl
+  </data>
  </layer>
+ <layer name="collision" width="20" height="20" visible="0" opacity="0.77">
+  <data encoding="base64" compression="zlib">
+   eJytlEEOADAEBP3/V37WuxSDbSJphLGi5WbmYpucKmfCI/Upj/ZFtf/uHmIrXszpYrK6lLfpN8ZdeZne7TyITsLLfJFHc4mOib4t58pTzKPjZv9IsXtU76njTVnbfsmOUNgDn9pxFw==
+  </data>
+ </layer>
+ <objectgroup name="objects"/>
 </map>

@@ -8,7 +8,7 @@ return {
   height = 20,
   tilewidth = 16,
   tileheight = 16,
-  nextobjectid = 39,
+  nextobjectid = 60,
   properties = {},
   tilesets = {
     {
@@ -19,8 +19,8 @@ return {
       spacing = 0,
       margin = 0,
       image = "../gra/basictiles.png",
-      imagewidth = 128,
-      imageheight = 240,
+      imagewidth = 256,
+      imageheight = 192,
       tileoffset = {
         x = 0,
         y = 0
@@ -31,9 +31,14 @@ return {
           name = "grass",
           tile = -1,
           properties = {}
+        },
+        {
+          name = "forest",
+          tile = -1,
+          properties = {}
         }
       },
-      tilecount = 120,
+      tilecount = 192,
       tiles = {
         {
           id = 0,
@@ -50,26 +55,38 @@ return {
           }
         },
         {
-          id = 11,
+          id = 24,
+          terrain = { 1, 1, 1, 1 }
+        },
+        {
+          id = 25,
+          terrain = { 1, 1, 1, 1 }
+        },
+        {
+          id = 30,
           terrain = { 0, 0, 0, 0 }
         },
         {
-          id = 12,
+          id = 31,
           terrain = { 0, 0, 0, 0 }
         },
         {
-          id = 64,
+          id = 40,
+          terrain = { 1, 1, 1, 1 }
+        },
+        {
+          id = 46,
           terrain = { 0, 0, 0, 0 }
         },
         {
-          id = 65,
+          id = 47,
           terrain = { 0, 0, 0, 0 }
         }
       }
     },
     {
       name = "collisions tileset",
-      firstgid = 121,
+      firstgid = 193,
       tilewidth = 16,
       tileheight = 16,
       spacing = 0,
@@ -88,21 +105,35 @@ return {
         {
           id = 0,
           properties = {
-            ["collidable"] = true,
-            ["hide"] = true
+            ["collidable"] = true
           }
         },
         {
           id = 1,
           properties = {
-            ["collidable"] = false,
-            ["hide"] = true
+            ["collidable"] = false
           }
         }
       }
     }
   },
   layers = {
+    {
+      type = "tilelayer",
+      name = "underwater",
+      x = 0,
+      y = 0,
+      width = 20,
+      height = 20,
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      properties = {},
+      encoding = "base64",
+      compression = "zlib",
+      data = "eJxjYBgFtAB1UExNswareaNgFIyCkQkA9GcD8Q=="
+    },
     {
       type = "tilelayer",
       name = "ground",
@@ -115,33 +146,13 @@ return {
       offsetx = 0,
       offsety = 0,
       properties = {},
-      encoding = "lua",
-      data = {
-        12, 66, 65, 66, 65, 12, 12, 12, 65, 13, 66, 12, 13, 66, 12, 13, 12, 66, 12, 65,
-        12, 66, 66, 12, 66, 66, 13, 66, 13, 66, 65, 65, 65, 66, 12, 13, 65, 13, 12, 12,
-        66, 13, 12, 66, 12, 66, 66, 66, 66, 12, 13, 13, 65, 12, 66, 66, 66, 65, 13, 65,
-        12, 66, 13, 13, 13, 12, 13, 66, 12, 13, 12, 12, 66, 13, 12, 65, 66, 12, 66, 13,
-        65, 66, 65, 66, 66, 66, 12, 12, 13, 13, 65, 65, 13, 12, 13, 66, 66, 13, 13, 66,
-        13, 66, 65, 66, 66, 65, 65, 13, 66, 66, 66, 12, 12, 65, 12, 12, 12, 66, 66, 13,
-        12, 65, 12, 13, 12, 66, 13, 13, 13, 13, 12, 66, 12, 65, 65, 65, 12, 65, 12, 66,
-        12, 66, 13, 66, 13, 66, 13, 13, 13, 65, 12, 66, 65, 13, 12, 66, 65, 12, 65, 13,
-        65, 13, 13, 12, 12, 65, 66, 65, 12, 66, 12, 13, 13, 12, 65, 13, 66, 12, 12, 65,
-        66, 66, 12, 12, 12, 13, 66, 66, 66, 65, 65, 65, 66, 65, 66, 66, 65, 66, 65, 13,
-        66, 12, 66, 12, 65, 12, 66, 66, 66, 66, 12, 65, 66, 66, 65, 12, 66, 66, 65, 13,
-        12, 13, 65, 12, 12, 66, 65, 66, 12, 66, 13, 65, 66, 13, 66, 13, 65, 66, 66, 13,
-        12, 65, 12, 66, 66, 13, 12, 12, 13, 12, 12, 65, 13, 65, 12, 66, 65, 65, 65, 66,
-        13, 65, 12, 66, 13, 12, 65, 66, 12, 13, 66, 13, 65, 13, 12, 65, 65, 13, 66, 65,
-        66, 65, 65, 13, 12, 13, 66, 13, 65, 13, 12, 13, 65, 65, 65, 12, 65, 12, 13, 13,
-        13, 12, 13, 13, 66, 65, 65, 65, 13, 13, 12, 13, 13, 12, 13, 12, 13, 66, 66, 12,
-        66, 12, 12, 66, 65, 66, 13, 66, 65, 12, 12, 65, 66, 66, 12, 13, 12, 12, 66, 66,
-        12, 12, 12, 66, 66, 65, 65, 13, 12, 12, 13, 66, 12, 13, 66, 66, 13, 12, 13, 65,
-        13, 65, 65, 13, 13, 12, 12, 65, 65, 65, 12, 12, 13, 13, 12, 66, 66, 13, 12, 13,
-        66, 66, 12, 12, 12, 65, 12, 65, 12, 12, 65, 13, 13, 66, 13, 12, 12, 65, 13, 66
-      }
+      encoding = "base64",
+      compression = "zlib",
+      data = "eJx9lNsNxDAIBN2J6SA0cXWl9dNJRprMQT6QEx4LLMa51rqOJL639Huwly10MoZCnA25Tmyek/UkbF1NxHP+EDb7MmbpQjix/usNYNGv6rmPlP4j2QMusUpuSMW84XU1s0fjdfXFes4617N34ody7KG+jivPIJSD/oXL2eZ69ksd78k0X+Ykh+yF/uTYdTvX5DP5vu2LxTvqvcrhjBf/jofyIb+eIWfr+2G+3IP32zbOOYZ/v0Wuv9tb9tVhd3efMVMe82t917v59RtbfJofz8+73+n8dndvBLlg//b92b8YJEMr"
     },
     {
       type = "tilelayer",
-      name = "tiles",
+      name = "road",
       x = 0,
       y = 0,
       width = 20,
@@ -151,65 +162,52 @@ return {
       offsetx = 0,
       offsety = 0,
       properties = {},
-      encoding = "lua",
-      data = {
-        3221225564, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 78, 0, 0, 0, 0, 0,
-        1610612828, 0, 0, 0, 0, 0, 0, 0, 0, 0, 78, 78, 78, 78, 78, 0, 0, 0, 0, 0,
-        2684354652, 0, 0, 0, 0, 0, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-        92, 0, 0, 0, 0, 0, 0, 0, 0, 1610612737, 9, 9, 9, 9, 9, 2684354561, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 2, 1610612737, 9, 9, 9, 9, 9, 2684354561, 0, 0, 0, 0,
-        0, 0, 0, 78, 21, 0, 0, 0, 2, 2, 9, 9, 9, 9, 9, 2684354561, 0, 92, 0, 0,
-        0, 0, 0, 0, 21, 0, 0, 0, 2, 1610612737, 9, 9, 9, 9, 9, 2684354561, 0, 100, 0, 0,
-        0, 0, 0, 0, 92, 0, 0, 0, 0, 1610612737, 9, 9, 9, 9, 9, 2684354561, 0, 0, 0, 0,
-        0, 0, 0, 0, 100, 78, 0, 0, 0, 1610612737, 9, 9, 9, 9, 9, 2684354561, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 78, 0, 0, 0, 1, 1, 1, 1, 1, 1, 1, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 78, 78, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 77, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 77, 77, 77, 77, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 77, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-      }
+      encoding = "base64",
+      compression = "zlib",
+      data = "eJxjYBgF1AT5VDbPZxCbZ0tF8+yhZgVQyTyQWX5EqCM2voj150CqsyOghpT48oeqJYSpFV+jYGgCAGVeCQM="
     },
     {
       type = "tilelayer",
-      name = "collisions",
+      name = "tile",
+      x = 0,
+      y = 0,
+      width = 20,
+      height = 20,
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      properties = {},
+      encoding = "base64",
+      compression = "zlib",
+      data = "eJylVDEOwjAMzMJA6QfCzpAdJB7AE1AnOsLGBjyiwAv4LK7kk47IThtx0imuk55dx3UKIURhUq5pZUbyR/LjvUhnagANC9Ct0SnFR95TaIXLjK2j5+V3FHZqN8KN2lfhWX3AoCvqa2mNuJBejkZ1cC/QQ35POnsT3oUPR2/rxJiqL+fCODh6pfq9yF4RF2Rb+c3tlxHviX2rX6yc8cy1sWrl9V9Nzgz8i/8i0Vr7/+YajNL9zsWObJ4VvfBksAZcv97Y78O8eux15ftlvU8hhgf0MuJb31rSGwxfPufz+Y79GH7nfCqc+QKlAxpl"
+    },
+    {
+      type = "tilelayer",
+      name = "collision",
       x = 0,
       y = 0,
       width = 20,
       height = 20,
       visible = false,
-      opacity = 0.26,
+      opacity = 0.77,
       offsetx = 0,
       offsety = 0,
       properties = {},
-      encoding = "lua",
-      data = {
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 121, 121, 121, 121, 121, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 121, 121, 121, 121, 121, 121, 121, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0,
-        0, 0, 0, 121, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0,
-        0, 0, 0, 0, 121, 0, 0, 0, 0, 121, 0, 0, 0, 0, 0, 121, 0, 121, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0,
-        0, 0, 0, 0, 121, 121, 0, 0, 0, 121, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 121, 0, 0, 0, 121, 121, 121, 121, 121, 121, 121, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 121, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 121, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 121, 121, 121, 121, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 121, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0,
-        0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0
-      }
+      encoding = "base64",
+      compression = "zlib",
+      data = "eJytlEEOADAEBP3/V37WuxSDbSJphLGi5WbmYpucKmfCI/Upj/ZFtf/uHmIrXszpYrK6lLfpN8ZdeZne7TyITsLLfJFHc4mOib4t58pTzKPjZv9IsXtU76njTVnbfsmOUNgDn9pxFw=="
+    },
+    {
+      type = "objectgroup",
+      name = "objects",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      draworder = "topdown",
+      properties = {},
+      objects = {}
     }
   }
 }
