@@ -8,7 +8,7 @@ return {
   height = 20,
   tilewidth = 16,
   tileheight = 16,
-  nextobjectid = 64,
+  nextobjectid = 67,
   properties = {},
   tilesets = {
     {
@@ -180,7 +180,7 @@ return {
       properties = {},
       encoding = "base64",
       compression = "zlib",
-      data = "eJylVDEOwjAMzMJA6QfCzpAdJB7AE1AnOsLGBjyiwAv4LK7kk47IThtx0imuk55dx3UKIURhUq5pZUbyR/LjvUhnagANC9Ct0SnFR95TaIXLjK2j5+V3FHZqN8KN2lfhWX3AoCvqa2mNuJBejkZ1cC/QQ35POnsT3oUPR2/rxJiqL+fCODh6pfq9yF4RF2Rb+c3tlxHviX2rX6yc8cy1sWrl9V9Nzgz8i/8i0Vr7/+YajNL9zsWObJ4VvfBksAZcv97Y78O8eux15ftlvU8hhgf0MuJb31rSGwxfPufz+Y79GH7nfCqc+QKlAxpl"
+      data = "eJylVDEOwjAMzErpB8LOkB0kHsATEBMZYWMDHlHgBXwWV/JJh+WkjTjpFNdJz67jOoUQojApV7QyI/kj+fFepDMtgIYH6Lbo1OIj7yn0woVhX9Ar5XcQHtXuhGu1r8Kz+oBBV9TX0xpxIT2LTnVwL9BDfk86exPehY+C3qYQY6q+nAtjX9Cr1e9F9pIYjG3zm9svI94T+16/eDnjmWvj1arUfy05M/Av/otEa+v/azUYtfudiy3ZPCuy8OSwBVy/7OznMK8eO135flnvU4lRAnoZ8b1vrekNjs/OeTvfsR/D75xPlTNfkzMaYA=="
     },
     {
       type = "tilelayer",
@@ -200,7 +200,34 @@ return {
     },
     {
       type = "objectgroup",
-      name = "spawn point",
+      name = "interactive",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      draworder = "topdown",
+      properties = {},
+      objects = {
+        {
+          id = 64,
+          name = "door",
+          type = "door",
+          shape = "rectangle",
+          x = 192,
+          y = 128,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["open"] = false
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      name = "mob",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -210,8 +237,8 @@ return {
       objects = {
         {
           id = 61,
-          name = "Player",
-          type = "",
+          name = "player",
+          type = "mob",
           shape = "rectangle",
           x = 192,
           y = 224,
@@ -219,7 +246,26 @@ return {
           height = 16,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["imgx"] = 2,
+            ["imgy"] = 1
+          }
+        },
+        {
+          id = 65,
+          name = "monster1",
+          type = "mob",
+          shape = "rectangle",
+          x = 112,
+          y = 160,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["imgx"] = 4,
+            ["imgy"] = 1
+          }
         }
       }
     }

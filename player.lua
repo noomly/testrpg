@@ -2,20 +2,20 @@ local Mob = require("mob")
 
 local Player = class("Player", Mob)
 
-function Player:initialize(sp)
-    Mob:initialize(sp)
+function Player:initialize(sp, x, y)
+    Mob:initialize(sp, x, y)
 
-    self.bb = { x = 6 * TILE_SIZE_O, y = 3 * TILE_SIZE_O, w = TILE_SIZE_O,
-        h = TILE_SIZE_O } -- Bounding box
+    -- self.bb = { x = 6 * TILE_SIZE_O, y = 3 * TILE_SIZE_O, w = TILE_SIZE_O,
+    --     h = TILE_SIZE_O } -- Bounding box
 
     self.speed = 80
 end
 
 function Player:collide(cols)
-    -- print(inspect(cols[1].other.properties)) -- TODO: continue
-    if cols[1].other.properties.door == true then
-        print("door!")
-    end
+    print(inspect(cols[1])) -- TODO: continue
+    -- if cols[1].other.properties.door == true then
+    --     print("door!")
+    -- end
 end
 
 function Player:keypressed(key, scancode, isrepeat)

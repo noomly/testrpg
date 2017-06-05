@@ -2,13 +2,14 @@ local Animate = require("animate")
 
 local Mob = class("Mob")
 
-function Mob:initialize(sp)
+function Mob:initialize(sp, x, y)
     self.name = "mob"
 
     self.sp = sp
 
-    self.bb = { x = 2 * TILE_SIZE_O, y = 3 * TILE_SIZE_O, w = TILE_SIZE_O,
-        h = TILE_SIZE_O } -- Bounding box
+    -- print("mob", x, y)
+    -- Bounding box
+    self.bb = { x = x, y = y, w = TILE_SIZE_O, h = TILE_SIZE_O }
 
     self.speed = 32
 

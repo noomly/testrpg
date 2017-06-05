@@ -24,7 +24,7 @@ end
 
 function love.update(dt)
     io.flush()
-    -- print("FPS:", love.timer.getFPS())
+    print("FPS:", love.timer.getFPS())
 
     game:update(dt)
 end

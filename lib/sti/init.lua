@@ -699,7 +699,7 @@ end
 --- Animate Tiles and update every Layer
 -- @param dt Delta Time
 -- @return nil
-function Map:update(dt)
+function Map:update(dt, optional_args) -- optional_args is a patch writtent by Eyal Chojnowski
     for _, tile in pairs(self.tiles) do
         local update = false
 
@@ -724,7 +724,7 @@ function Map:update(dt)
     end
 
     for _, layer in ipairs(self.layers) do
-        layer:update(dt)
+        layer:update(dt, optional_args)
     end
 end
 
