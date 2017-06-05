@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="67">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="73">
  <tileset firstgid="1" name="basic tileset" tilewidth="16" tileheight="16" tilecount="192" columns="16">
   <image source="../gra/basictiles.png" width="256" height="192"/>
   <terraintypes>
@@ -52,27 +52,33 @@
  </layer>
  <layer name="collision" width="20" height="20" visible="0" opacity="0.77">
   <data encoding="base64" compression="zlib">
-   eJytlEEOADAEBP3/V37WuxSDbSJphLGi5WbmYpucKmfCI/Upj/ZFtf/uHmIrXszpYrK6lLfpN8ZdeZne7TyITsLLfJFHc4mOib4t58pTzKPjZv9IsXtU76njTVnbfsmOUNgDn9pxFw==
+   eJytlEsSADAEQ93/Vm7WfUYlSGdslCf6kRGRZpusLmfCU+qrPLUvVXsWfvR1PMxhMRWv04C8Tb8Yd+UxvRd9VY3fvtJLd8aKvumfYbwN58pz3AfjVm/ANXtc74nxpqxtv8qMcNgDSRhvlQ==
   </data>
  </layer>
- <objectgroup name="interactive">
-  <object id="64" name="door" type="door" x="192" y="128" width="16" height="16">
-   <properties>
-    <property name="open" type="bool" value="false"/>
-   </properties>
-  </object>
- </objectgroup>
- <objectgroup name="mob">
-  <object id="61" name="player" type="mob" x="192" y="224" width="16" height="16">
+ <objectgroup color="#0000ff" name="mob">
+  <object id="61" name="player" x="192" y="224" width="16" height="16">
    <properties>
     <property name="imgx" type="int" value="2"/>
     <property name="imgy" type="int" value="1"/>
    </properties>
   </object>
-  <object id="65" name="monster1" type="mob" x="112" y="160" width="16" height="16">
+  <object id="64" name="monster1" x="112" y="160" width="16" height="16">
    <properties>
     <property name="imgx" type="int" value="4"/>
     <property name="imgy" type="int" value="1"/>
+   </properties>
+  </object>
+ </objectgroup>
+ <objectgroup color="#00ff00" name="interactive">
+  <object id="70" name="door" x="192" y="128" width="16" height="16">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
+    <property name="open" type="bool" value="false"/>
+   </properties>
+  </object>
+  <object id="72" name="chest" x="160" y="64" width="16" height="16">
+   <properties>
+    <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
  </objectgroup>

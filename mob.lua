@@ -2,21 +2,24 @@ local Animate = require("animate")
 
 local Mob = class("Mob")
 
-function Mob:initialize(sp, x, y)
+function Mob:initialize(sp, map_object)
     self.name = "mob"
 
     self.sp = sp
 
-    -- print("mob", x, y)
+    self.map_object = map_object
+
     -- Bounding box
-    self.bb = { x = x, y = y, w = TILE_SIZE_O, h = TILE_SIZE_O }
+    self.bb = { x = map_object.x, y = map_object.y, w = TILE_SIZE_O,
+        h = TILE_SIZE_O }
 
     self.speed = 32
 
     self.move = { left = 0, right = 0, up = 0, down = 0 }
     self.moving = "standing" -- standing, left, right, up, down
-    self.moving_old = "standing"
     self.moving_px = 0
+
+    self.facing = "south"
 
     self.an = Animate:new(self.sp:get_image())
     self.an:set_states({
@@ -66,15 +69,19 @@ function Mob:update(dt, world)
         if move_key == "left" then
             self.an:set_state_cur("walk_left")
             self.moving = "left"
+            self.facing = "west"
         elseif move_key == "right" then
             self.an:set_state_cur("walk_right")
             self.moving = "right"
+            self.facing = "east"
         elseif move_key == "up" then
             self.an:set_state_cur("walk_up")
             self.moving = "up"
+            self.facing = "north"
         elseif move_key == "down" then
             self.an:set_state_cur("walk_down")
             self.moving = "down"
+            self.facing = "south"
         end
     end
 
@@ -88,17 +95,17 @@ function Mob:update(dt, world)
 
     local cols, len
     if self.moving == "left" then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x - move_px,
-            self.bb.y)
+        self.bb.x, self.bb.y, cols, len = world:move(self.map_object,
+            self.bb.x - move_px, self.bb.y, self.col_filter)
     elseif self.moving == "right" then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x + move_px,
-            self.bb.y)
+        self.bb.x, self.bb.y, cols, len = world:move(self.map_object,
+            self.bb.x + move_px, self.bb.y, self.col_filter)
     elseif self.moving == "up" then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x,
-            self.bb.y - move_px)
+        self.bb.x, self.bb.y, cols, len = world:move(self.map_object, self.bb.x,
+            self.bb.y - move_px, self.col_filter)
     elseif self.moving == "down" then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x,
-            self.bb.y + move_px)
+        self.bb.x, self.bb.y, cols, len = world:move(self.map_object, self.bb.x,
+            self.bb.y + move_px, self.col_filter)
     end
 
     if len then
@@ -114,22 +121,21 @@ function Mob:update(dt, world)
             self.moving_px = 0
 
             if move_key ~= self.moving then
-                self.moving_old = self.moving
                 self.moving = "standing"
             end
         end
 
-        world:update(self, self.bb.x, self.bb.y)
+        world:update(self.map_object, self.bb.x, self.bb.y)
     end
 
     if self.moving == "standing" then
-        if self.moving_old == "left" then
+        if self.facing == "west" then
             self.an:set_state_cur("stand_left")
-        elseif self.moving_old == "right" then
+        elseif self.facing == "east" then
             self.an:set_state_cur("stand_right")
-        elseif self.moving_old == "up" then
+        elseif self.facing == "north" then
             self.an:set_state_cur("stand_up")
-        elseif self.moving_old == "down" then
+        elseif self.facing == "south" then
             self.an:set_state_cur("stand_down")
         end
     end
@@ -174,5 +180,12 @@ function Mob:get_simg() -- Get scaled image position
              self.bb.y * (TILE_SIZE / TILE_SIZE_O) }
 end
 
+function Mob.col_filter(item, other)
+    if other.name == "door" or other.name == "chest" then
+        return nil
+    else
+        return "slide"
+    end
+end
 
 return Mob

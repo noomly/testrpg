@@ -8,7 +8,7 @@ return {
   height = 20,
   tilewidth = 16,
   tileheight = 16,
-  nextobjectid = 67,
+  nextobjectid = 73,
   properties = {},
   tilesets = {
     {
@@ -196,34 +196,7 @@ return {
       properties = {},
       encoding = "base64",
       compression = "zlib",
-      data = "eJytlEEOADAEBP3/V37WuxSDbSJphLGi5WbmYpucKmfCI/Upj/ZFtf/uHmIrXszpYrK6lLfpN8ZdeZne7TyITsLLfJFHc4mOib4t58pTzKPjZv9IsXtU76njTVnbfsmOUNgDn9pxFw=="
-    },
-    {
-      type = "objectgroup",
-      name = "interactive",
-      visible = true,
-      opacity = 1,
-      offsetx = 0,
-      offsety = 0,
-      draworder = "topdown",
-      properties = {},
-      objects = {
-        {
-          id = 64,
-          name = "door",
-          type = "door",
-          shape = "rectangle",
-          x = 192,
-          y = 128,
-          width = 16,
-          height = 16,
-          rotation = 0,
-          visible = true,
-          properties = {
-            ["open"] = false
-          }
-        }
-      }
+      data = "eJytlEsSADAEQ93/Vm7WfUYlSGdslCf6kRGRZpusLmfCU+qrPLUvVXsWfvR1PMxhMRWv04C8Tb8Yd+UxvRd9VY3fvtJLd8aKvumfYbwN58pz3AfjVm/ANXtc74nxpqxtv8qMcNgDSRhvlQ=="
     },
     {
       type = "objectgroup",
@@ -238,7 +211,7 @@ return {
         {
           id = 61,
           name = "player",
-          type = "mob",
+          type = "",
           shape = "rectangle",
           x = 192,
           y = 224,
@@ -252,9 +225,9 @@ return {
           }
         },
         {
-          id = 65,
+          id = 64,
           name = "monster1",
-          type = "mob",
+          type = "",
           shape = "rectangle",
           x = 112,
           y = 160,
@@ -265,6 +238,49 @@ return {
           properties = {
             ["imgx"] = 4,
             ["imgy"] = 1
+          }
+        }
+      }
+    },
+    {
+      type = "objectgroup",
+      name = "interactive",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      draworder = "topdown",
+      properties = {},
+      objects = {
+        {
+          id = 70,
+          name = "door",
+          type = "",
+          shape = "rectangle",
+          x = 192,
+          y = 128,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["collidable"] = true,
+            ["open"] = false
+          }
+        },
+        {
+          id = 72,
+          name = "chest",
+          type = "",
+          shape = "rectangle",
+          x = 160,
+          y = 64,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["collidable"] = true
           }
         }
       }

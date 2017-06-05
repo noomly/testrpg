@@ -29,6 +29,7 @@ return {
                             if tile.objectGroup then
                                 for _, object in ipairs(tile.objectGroup.objects) do
                                     if object.properties.collidable == true then
+                                        print(object.name, "pouet")
                                         local t = {
                                             x          = instance.x + map.offsetx + object.x,
                                             y          = instance.y + map.offsety + object.y,
@@ -36,7 +37,6 @@ return {
                                             height     = object.height,
                                             layer      = instance.layer,
                                             properties = object.properties
-
                                         }
 
                                         world:add(t, t.x, t.y, t.width, t.height)
@@ -122,7 +122,10 @@ return {
                                 width      = obj.width,
                                 height     = obj.height,
                                 layer      = layer,
-                                properties = obj.properties
+                                properties = obj.properties,
+                                name       = obj.name,
+                                type       = obj.type,
+                                id         = obj.id
                             }
 
                             if obj.gid then

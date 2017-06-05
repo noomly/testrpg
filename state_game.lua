@@ -19,18 +19,18 @@ function StateGame:initialize(level_path)
     local mobs_sp = SpriteSheet:new(mobs_image,love.graphics.newQuad(0, 0,
             mobs_image_w, mobs_image_h, mobs_image_w, mobs_image_h), 64, 64)
 
-    for k, object in pairs(self.map.layers["mob"].objects) do
+    for k, object in pairs(self.map.layers.mob.objects) do
         local sp = SpriteSheet:new(mobs_image, mobs_sp:get_quad(
             object.properties.imgx, object.properties.imgy), TILE_SIZE_O,
             TILE_SIZE_O)
 
         if object.name == "player" then
-            object.entity = Player:new(sp, object.x, object.y)
+            object.entity = Player:new(sp, object, self.map, self.world)
         else
-            object.entity = Mob:new(sp, object.x, object.y)
+            object.entity = Mob:new(sp, object)
         end
 
-        self.world:add(object.entity, unpack(object.entity:get_bb()))
+        self.world:add(object, unpack(object.entity:get_bb()))
         -- self.world:add(unpack(object.entity:get_bb()))
     end
 
@@ -119,7 +119,7 @@ function StateGame:draw(dt)
         love.graphics.scale(TILE_SIZE / TILE_SIZE_O, TILE_SIZE / TILE_SIZE_O)
 
         self.map:draw()
-        --self.map:bump_draw(self.world)
+        -- self.map:bump_draw(self.world)
 
         -- self.player:draw()
         -- self.monster:draw()
