@@ -1,6 +1,5 @@
 local Animate = class("Animate")
 
-
 function Animate:initialize(image)
     self.image = image
 

@@ -1,6 +1,5 @@
 local Level = class("Level")
 
-
 -- 15 lines in spritesheet
 function Level:initialize(lvl_data, world, sp)
     self.lvl_data = lvl_data

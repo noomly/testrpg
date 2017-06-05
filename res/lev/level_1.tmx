@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="60">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="64">
  <tileset firstgid="1" name="basic tileset" tilewidth="16" tileheight="16" tilecount="192" columns="16">
   <image source="../gra/basictiles.png" width="256" height="192"/>
   <terraintypes>
@@ -55,5 +55,7 @@
    eJytlEEOADAEBP3/V37WuxSDbSJphLGi5WbmYpucKmfCI/Upj/ZFtf/uHmIrXszpYrK6lLfpN8ZdeZne7TyITsLLfJFHc4mOib4t58pTzKPjZv9IsXtU76njTVnbfsmOUNgDn9pxFw==
   </data>
  </layer>
- <objectgroup name="objects"/>
+ <objectgroup name="spawn point">
+  <object id="61" name="Player" x="192" y="224" width="16" height="16"/>
+ </objectgroup>
 </map>

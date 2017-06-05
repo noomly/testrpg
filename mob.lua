@@ -2,7 +2,6 @@ local Animate = require("animate")
 
 local Mob = class("Mob")
 
-
 function Mob:initialize(sp)
     self.name = "mob"
 
@@ -88,13 +87,17 @@ function Mob:update(dt, world)
 
     local cols, len
     if self.moving == "left" then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x - move_px, self.bb.y)
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x - move_px,
+            self.bb.y)
     elseif self.moving == "right" then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x + move_px, self.bb.y)
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x + move_px,
+            self.bb.y)
     elseif self.moving == "up" then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y - move_px)
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x,
+            self.bb.y - move_px)
     elseif self.moving == "down" then
-        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x, self.bb.y + move_px)
+        self.bb.x, self.bb.y, cols, len = world:move(self, self.bb.x,
+            self.bb.y + move_px)
     end
 
     if len then

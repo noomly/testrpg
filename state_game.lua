@@ -1,10 +1,9 @@
-local StateGame = class("StateGame")
-
-
 -- Import local classes
 local SpriteSheet = require("spritesheet")
 local Mob = require("mob")
 local Player = require("player")
+
+local StateGame = class("StateGame")
 
 function StateGame:initialize(level_path)
     self.world = bump.newWorld()

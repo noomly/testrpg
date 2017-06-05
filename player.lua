@@ -2,7 +2,6 @@ local Mob = require("mob")
 
 local Player = class("Player", Mob)
 
-
 function Player:initialize(sp)
     Mob:initialize(sp)
 

@@ -1,6 +1,5 @@
 local Camera = class("Camera")
 
-
 function Camera:initialize(cx, cy)
     self.cx = cx
     self.cy = cy
