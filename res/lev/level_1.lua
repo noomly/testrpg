@@ -177,26 +177,12 @@ return {
       opacity = 1,
       offsetx = 0,
       offsety = 0,
-      properties = {},
+      properties = {
+        ["collidable"] = true
+      },
       encoding = "base64",
       compression = "zlib",
       data = "eJylVDEOwjAMzErpB8LOkB0kHsATEBMZYWMDHlHgBXwWV/JJh+WkjTjpFNdJz67jOoUQojApV7QyI/kj+fFepDMtgIYH6Lbo1OIj7yn0woVhX9Ar5XcQHtXuhGu1r8Kz+oBBV9TX0xpxIT2LTnVwL9BDfk86exPehY+C3qYQY6q+nAtjX9Cr1e9F9pIYjG3zm9svI94T+16/eDnjmWvj1arUfy05M/Av/otEa+v/azUYtfudiy3ZPCuy8OSwBVy/7OznMK8eO135flnvU4lRAnoZ8b1vrekNjs/OeTvfsR/D75xPlTNfkzMaYA=="
-    },
-    {
-      type = "tilelayer",
-      name = "collision",
-      x = 0,
-      y = 0,
-      width = 20,
-      height = 20,
-      visible = false,
-      opacity = 0.77,
-      offsetx = 0,
-      offsety = 0,
-      properties = {},
-      encoding = "base64",
-      compression = "zlib",
-      data = "eJytlEsSADAEQ93/Vm7WfUYlSGdslCf6kRGRZpusLmfCU+qrPLUvVXsWfvR1PMxhMRWv04C8Tb8Yd+UxvRd9VY3fvtJLd8aKvumfYbwN58pz3AfjVm/ANXtc74nxpqxtv8qMcNgDSRhvlQ=="
     },
     {
       type = "objectgroup",
