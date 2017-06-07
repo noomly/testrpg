@@ -8,7 +8,7 @@ return {
   height = 20,
   tilewidth = 16,
   tileheight = 16,
-  nextobjectid = 73,
+  nextobjectid = 76,
   properties = {},
   tilesets = {
     {
@@ -182,7 +182,7 @@ return {
       },
       encoding = "base64",
       compression = "zlib",
-      data = "eJylVDEOwjAMzErpB8LOkB0kHsATEBMZYWMDHlHgBXwWV/JJh+WkjTjpFNdJz67jOoUQojApV7QyI/kj+fFepDMtgIYH6Lbo1OIj7yn0woVhX9Ar5XcQHtXuhGu1r8Kz+oBBV9TX0xpxIT2LTnVwL9BDfk86exPehY+C3qYQY6q+nAtjX9Cr1e9F9pIYjG3zm9svI94T+16/eDnjmWvj1arUfy05M/Av/otEa+v/azUYtfudiy3ZPCuy8OSwBVy/7OznMK8eO135flnvU4lRAnoZ8b1vrekNjs/OeTvfsR/D75xPlTNfkzMaYA=="
+      data = "eJylVDEOwjAM9Ar0A2FmyQ4SD+AJiImMsLEBjwjwAj6LK8XisOw0ESed7Lrp2bWTRCIKzFi4BIsMEA8Ql+8CrOmBaFgQ3R6dWn6pewoDc6Y4OHpefXvmofhziF+YJxXLxUp/La0RZ0OPIJbpOxfRk/oesPbKvDHvjt7ayTHVX6wFsXP0av17gr8AkvJ1fa37ZcTLiK1UfXoeVs3yjL2xeuXtv56aEXIW/0UE23t+tQaiNt9WbMDHuyIxjwZ7gP1LxvtEbf3YFovzRb13JYcH2cuS3/rXml42Yvqe1/e7vA/0e8/HypoPUrsaXw=="
     },
     {
       type = "objectgroup",
@@ -199,8 +199,8 @@ return {
           name = "player",
           type = "",
           shape = "rectangle",
-          x = 192,
-          y = 224,
+          x = 176,
+          y = 96,
           width = 16,
           height = 16,
           rotation = 0,
@@ -229,6 +229,22 @@ return {
       }
     },
     {
+      type = "tilelayer",
+      name = "over",
+      x = 0,
+      y = 0,
+      width = 20,
+      height = 20,
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      properties = {},
+      encoding = "base64",
+      compression = "zlib",
+      data = "eJxjYBgFo2DoApGBdsAoGAUjGAAATEAAFQ=="
+    },
+    {
       type = "objectgroup",
       name = "interactive",
       visible = true,
@@ -240,8 +256,8 @@ return {
       objects = {
         {
           id = 70,
-          name = "door",
-          type = "",
+          name = "door1",
+          type = "door",
           shape = "rectangle",
           x = 192,
           y = 128,
@@ -256,8 +272,8 @@ return {
         },
         {
           id = 72,
-          name = "chest",
-          type = "",
+          name = "chest1",
+          type = "chest",
           shape = "rectangle",
           x = 160,
           y = 64,

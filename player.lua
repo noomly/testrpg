@@ -2,12 +2,9 @@ local Mob = require("mob")
 
 local Player = class("Player", Mob)
 
-function Player:initialize(sp, map_object, map, world)
+function Player:initialize(sp, map_object)
     Mob.initialize(self, sp, map_object)
     self.name = "player"
-
-    self.map = map
-    self.world = world
 
     self.speed = 80
 
@@ -22,24 +19,25 @@ function Player:update(dt, world)
         local items, len
 
         if self.facing == "west" then
-            items, len = self.world:queryPoint(self.bb.x - 1, self.bb.y + 1)
+            items, len = world:queryPoint(self.bb.x - 1, self.bb.y + 1)
         elseif self.facing == "east" then
-            items, len = self.world:queryPoint(self.bb.x + 17, self.bb.y + 1)
+            items, len = world:queryPoint(self.bb.x + 17, self.bb.y + 1)
         elseif self.facing == "north" then
-            items, len = self.world:queryPoint(self.bb.x + 1, self.bb.y - 1)
+            items, len = world:queryPoint(self.bb.x + 1, self.bb.y - 1)
         elseif self.facing == "south" then
-            items, len = self.world:queryPoint(self.bb.x + 1, self.bb.y + 17)
+            items, len = world:queryPoint(self.bb.x + 1, self.bb.y + 17)
         end
 
         if len > 0 then
-            if items[1].name == "door" then
-                if items[1].properties.open then
-                    items[1].properties.open = false
-                else
-                    items[1].properties.open = true
+            for _, object in pairs(items) do
+                if object.entity ~= nil then
+                    -- print(object.type, len)
+                    if object.type == "door" then
+                        object.entity:toggle()
+                    elseif object.type == "chest" then
+                        print("openning chest")
+                    end
                 end
-            elseif items[1].name == "chest" then
-                print("openning chest")
             end
         end
     end
@@ -84,15 +82,15 @@ function Player:collide(cols)
     end
 end
 
-function Player.col_filter(item, other)
-    if other.name == "door" and other.properties.open then
-        return nil
-    elseif other.name == "chest" then
-        return "slide"
-    else
-        return "slide"
-    end
-end
+-- function Player.col_filter(item, other)
+--     if other.name == "door" and other.properties.open then
+--         return nil
+--     elseif other.name == "chest" then
+--         return "slide"
+--     else
+--         return "slide"
+--     end
+-- end
 
 
 return Player

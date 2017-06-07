@@ -3,7 +3,6 @@ local SpriteSheet = require("spritesheet")
 local Entity = require("entity")
 local Mob = require("mob")
 local Player = require("player")
-local Door = require("door")
 
 local StateGame = class("StateGame")
 
@@ -59,30 +58,24 @@ function StateGame:initialize(level_path)
     local objects_image_w, objects_image_h = objects_image:getDimensions()
     local objects_sp = SpriteSheet:new(objects_image, love.graphics.newQuad(0,
         0, objects_image_w, objects_image_h, objects_image_w, objects_image_h),
-        48, 64)
+        16, 16)
 
     for k, object in pairs(self.map.layers.interactive.objects) do
+        local sp
         if object.type == "door" then
-            local sp = SpriteSheet:new(objects_image, objects_sp:get_quad(1,
-                1), TILE_SIZE_O, TILE_SIZE_O)
-            object.entity = Door:new(sp, object)
-
-        elseif object.type == "chest" then
-            local sp = SpriteSheet:new(objects_image, objects_sp:get_quad(3, 1),
+            sp = SpriteSheet:new(objects_image, objects_sp:get_quad(5, 1),
                 TILE_SIZE_O, TILE_SIZE_O)
-            object.entity = Entity:new(sp, object)
+        elseif object.type == "chest" then
+            sp = SpriteSheet:new(objects_image, objects_sp:get_quad(5, 3),
+                TILE_SIZE_O, TILE_SIZE_O)
         end
+
+        object.entity = Entity:new(sp, object)
 
         self.world:add(object, unpack(object.entity:get_bb()))
     end
 
-    self.map.layers.interactive.update = function(self, dt)
-        for _, object in pairs(self.objects) do
-            object.entity:update(dt)
-        end
-    end
-
-    self.map.layers.interactive.draw = function(self)
+    self.map.layers.interactive.draw = function (self)
         for _, object in pairs(self.objects) do
             object.entity:draw()
         end

@@ -1,17 +1,11 @@
 local Animate = require("animate")
+local Entity = require("entity")
 
-local Mob = class("Mob")
+local Mob = class("Mob", Entity)
 
 function Mob:initialize(sp, map_object)
+    Entity.initialize(self, sp, map_object)
     self.name = "mob"
-
-    self.sp = sp
-
-    self.map_object = map_object
-
-    -- Bounding box
-    self.bb = { x = map_object.x, y = map_object.y, w = TILE_SIZE_O,
-        h = TILE_SIZE_O }
 
     self.speed = 32
 
@@ -21,7 +15,6 @@ function Mob:initialize(sp, map_object)
 
     self.facing = "south"
 
-    self.an = Animate:new(self.sp:get_image())
     self.an:set_states({
         default = { { 2, 1 } },
         walk_left = {
@@ -59,10 +52,11 @@ function Mob:initialize(sp, map_object)
             { 2, 2 },
         },
     })
-    self.an:set_cycle_time(0.50)
 end
 
 function Mob:update(dt, world)
+    Entity.update(self, dt)
+
     local move_key, move_value = self:_get_move_max()
 
     if self.moving == "standing" then
@@ -139,18 +133,10 @@ function Mob:update(dt, world)
             self.an:set_state_cur("stand_down")
         end
     end
-
-    self.an:update(dt)
 end
 
 function Mob:collide(cols)
     -- Doing nothing, extend me in subclasses
-end
-
-function Mob:draw()
-    love.graphics.draw(self.sp:get_image(),
-                       self.sp:get_quad(unpack(self.an:get_quad_cur())),
-                       self.bb.x, self.bb.y)
 end
 
 function Mob:_get_move_max()
@@ -171,17 +157,13 @@ function Mob:_get_move_max()
     return move_key, move_value
 end
 
-function Mob:get_bb()
-    return { self.bb.x, self.bb.y, self.bb.w, self.bb.h }
-end
-
 function Mob:get_simg() -- Get scaled image position
     return { self.bb.x * (TILE_SIZE / TILE_SIZE_O),
              self.bb.y * (TILE_SIZE / TILE_SIZE_O) }
 end
 
 function Mob.col_filter(item, other)
-    if other.name == "door" or other.name == "chest" then
+    if other.type == "door" and other.properties.open then
         return nil
     else
         return "slide"
