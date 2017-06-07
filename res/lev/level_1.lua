@@ -8,7 +8,7 @@ return {
   height = 20,
   tilewidth = 16,
   tileheight = 16,
-  nextobjectid = 64,
+  nextobjectid = 76,
   properties = {},
   tilesets = {
     {
@@ -177,30 +177,16 @@ return {
       opacity = 1,
       offsetx = 0,
       offsety = 0,
-      properties = {},
+      properties = {
+        ["collidable"] = true
+      },
       encoding = "base64",
       compression = "zlib",
-      data = "eJylVDEOwjAMzMJA6QfCzpAdJB7AE1AnOsLGBjyiwAv4LK7kk47IThtx0imuk55dx3UKIURhUq5pZUbyR/LjvUhnagANC9Ct0SnFR95TaIXLjK2j5+V3FHZqN8KN2lfhWX3AoCvqa2mNuJBejkZ1cC/QQ35POnsT3oUPR2/rxJiqL+fCODh6pfq9yF4RF2Rb+c3tlxHviX2rX6yc8cy1sWrl9V9Nzgz8i/8i0Vr7/+YajNL9zsWObJ4VvfBksAZcv97Y78O8eux15ftlvU8hhgf0MuJb31rSGwxfPufz+Y79GH7nfCqc+QKlAxpl"
-    },
-    {
-      type = "tilelayer",
-      name = "collision",
-      x = 0,
-      y = 0,
-      width = 20,
-      height = 20,
-      visible = false,
-      opacity = 0.77,
-      offsetx = 0,
-      offsety = 0,
-      properties = {},
-      encoding = "base64",
-      compression = "zlib",
-      data = "eJytlEEOADAEBP3/V37WuxSDbSJphLGi5WbmYpucKmfCI/Upj/ZFtf/uHmIrXszpYrK6lLfpN8ZdeZne7TyITsLLfJFHc4mOib4t58pTzKPjZv9IsXtU76njTVnbfsmOUNgDn9pxFw=="
+      data = "eJylVDEOwjAM9Ar0A2FmyQ4SD+AJiImMsLEBjwjwAj6LK8XisOw0ESed7Lrp2bWTRCIKzFi4BIsMEA8Ql+8CrOmBaFgQ3R6dWn6pewoDc6Y4OHpefXvmofhziF+YJxXLxUp/La0RZ0OPIJbpOxfRk/oesPbKvDHvjt7ayTHVX6wFsXP0av17gr8AkvJ1fa37ZcTLiK1UfXoeVs3yjL2xeuXtv56aEXIW/0UE23t+tQaiNt9WbMDHuyIxjwZ7gP1LxvtEbf3YFovzRb13JYcH2cuS3/rXml42Yvqe1/e7vA/0e8/HypoPUrsaXw=="
     },
     {
       type = "objectgroup",
-      name = "spawn point",
+      name = "mob",
       visible = true,
       opacity = 1,
       offsetx = 0,
@@ -210,16 +196,94 @@ return {
       objects = {
         {
           id = 61,
-          name = "Player",
+          name = "player",
           type = "",
           shape = "rectangle",
-          x = 192,
-          y = 224,
+          x = 176,
+          y = 96,
           width = 16,
           height = 16,
           rotation = 0,
           visible = true,
-          properties = {}
+          properties = {
+            ["imgx"] = 2,
+            ["imgy"] = 1
+          }
+        },
+        {
+          id = 64,
+          name = "monster1",
+          type = "",
+          shape = "rectangle",
+          x = 112,
+          y = 160,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["imgx"] = 4,
+            ["imgy"] = 1
+          }
+        }
+      }
+    },
+    {
+      type = "tilelayer",
+      name = "over",
+      x = 0,
+      y = 0,
+      width = 20,
+      height = 20,
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      properties = {},
+      encoding = "base64",
+      compression = "zlib",
+      data = "eJxjYBgFo2DoApGBdsAoGAUjGAAATEAAFQ=="
+    },
+    {
+      type = "objectgroup",
+      name = "interactive",
+      visible = true,
+      opacity = 1,
+      offsetx = 0,
+      offsety = 0,
+      draworder = "topdown",
+      properties = {},
+      objects = {
+        {
+          id = 70,
+          name = "door1",
+          type = "door",
+          shape = "rectangle",
+          x = 192,
+          y = 128,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["collidable"] = true,
+            ["open"] = false
+          }
+        },
+        {
+          id = 72,
+          name = "chest1",
+          type = "chest",
+          shape = "rectangle",
+          x = 160,
+          y = 64,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["collidable"] = true
+          }
         }
       }
     }

@@ -7,8 +7,10 @@ function Animate:initialize(image)
     self.state_sub = 1
     self.states = { default = { { 1, 1 } } }
 
-    self.cycle_time = 1 -- in second
+    self.cycle_time = 0.50 -- in second
     self.dt_cur = 0
+
+    self.play_once = false
 end
 
 function Animate:update(dt)
@@ -62,5 +64,8 @@ function Animate:get_quad_cur()
     return self.states[self.state_cur][self.state_sub]
 end
 
+function Animate:get_state_progress()
+    return self.state_sub / #self.states[self.state_cur]
+end
 
 return Animate
