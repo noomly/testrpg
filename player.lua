@@ -35,6 +35,7 @@ function Player:update(dt, world)
                     if object.type == "door" then
                         object.entity:toggle()
                     elseif object.type == "chest" then
+                        object.entity:toggle()
                         print("openning chest")
                     end
                 end

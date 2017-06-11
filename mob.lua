@@ -12,6 +12,8 @@ function Mob:initialize(sp, map_object)
     self.move = { left = 0, right = 0, up = 0, down = 0 }
     self.moving = "standing" -- standing, left, right, up, down
     self.moving_px = 0
+    self.move_wait = 0
+    self.move_wait_total = 0.083 -- secs
 
     self.facing = "south"
 
@@ -59,24 +61,50 @@ function Mob:update(dt, world)
 
     local move_key, move_value = self:_get_move_max()
 
-    if self.moving == "standing" then
-        if move_key == "left" then
-            self.an:set_state_cur("walk_left")
-            self.moving = "left"
-            self.facing = "west"
-        elseif move_key == "right" then
-            self.an:set_state_cur("walk_right")
-            self.moving = "right"
-            self.facing = "east"
-        elseif move_key == "up" then
-            self.an:set_state_cur("walk_up")
-            self.moving = "up"
-            self.facing = "north"
-        elseif move_key == "down" then
-            self.an:set_state_cur("walk_down")
-            self.moving = "down"
-            self.facing = "south"
+    if self.moving == "standing" and move_key ~= "nothing" then
+        if self.move_wait < self.move_wait_total then
+            if self.move_wait == 0 then
+                if move_key == "left" and self.facing == "west" then
+                    self.move_wait = self.move_wait_total
+                elseif move_key == "right" and self.facing == "east"then
+                    self.move_wait = self.move_wait_total
+                elseif move_key == "up" and self.facing == "north" then
+                    self.move_wait = self.move_wait_total
+                elseif move_key == "down" and self.facing == "south" then
+                    self.move_wait = self.move_wait_total
+                end
+            end
+
+            if move_key == "left" then
+                self.facing = "west"
+            elseif move_key == "right" then
+                self.facing = "east"
+            elseif move_key == "up" then
+                self.facing = "north"
+            elseif move_key == "down" then
+                self.facing = "south"
+            end
+
+            self.move_wait = self.move_wait + dt
+        else
+            self.move_wait = 0
+
+            if move_key == "left" then
+                self.an:set_state_cur("walk_left")
+                self.moving = "left"
+            elseif move_key == "right" then
+                self.an:set_state_cur("walk_right")
+                self.moving = "right"
+            elseif move_key == "up" then
+                self.an:set_state_cur("walk_up")
+                self.moving = "up"
+            elseif move_key == "down" then
+                self.an:set_state_cur("walk_down")
+                self.moving = "down"
+            end
         end
+    elseif move_key == "nothing" then
+        self.move_wait = 0
     end
 
     if moving ~= "standing" then
@@ -104,7 +132,6 @@ function Mob:update(dt, world)
 
     if len then
         if len > 0 then
-            -- print(inspect(cols[1].other))
             self:collide(cols)
         end
     end

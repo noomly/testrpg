@@ -70,7 +70,7 @@ function StateGame:initialize(level_path)
         elseif object.type == "chest" then
             local sp = SpriteSheet:new(objects_image, objects_sp:get_quad(3, 1),
                 TILE_SIZE_O, TILE_SIZE_O)
-            object.entity = Entity:new(sp, object)
+            object.entity = Door:new(sp, object)
         end
 
         self.world:add(object, unpack(object.entity:get_bb()))

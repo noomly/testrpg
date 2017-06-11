@@ -6,7 +6,7 @@ function Door:initialize(sp, map_object)
     Entity.initialize(self, sp, map_object)
     self.name = "door"
 
-    self.an:set_cycle_time(0.25)
+    self.an:set_cycle_time(0.15)
     self.an:set_states({
         default = { { 1, 4 } },
         closed = {
