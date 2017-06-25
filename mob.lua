@@ -1,10 +1,9 @@
-local Animate = require("animate")
 local Entity = require("entity")
 
-local Mob = class("Mob", Entity)
+local Mob = Entity:extend()
 
-function Mob:initialize(sp, map_object)
-    Entity.initialize(self, sp, map_object)
+function Mob:new(sp, map_object)
+    Mob.super.new(self, sp, map_object)
     self.name = "mob"
 
     self.speed = 32
@@ -57,9 +56,9 @@ function Mob:initialize(sp, map_object)
 end
 
 function Mob:update(dt, world)
-    Entity.update(self, dt)
+    Mob.super.update(self, dt)
 
-    local move_key, move_value = self:_get_move_max()
+    local move_key, _ = self:_get_move_max()
 
     if self.moving == "standing" and move_key ~= "nothing" then
         if self.move_wait < self.move_wait_total then

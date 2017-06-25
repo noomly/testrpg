@@ -1,9 +1,9 @@
 local Entity = require("entity")
 
-local Door = class("Door", Entity)
+local Door = Entity:extend()
 
-function Door:initialize(sp, map_object)
-    Entity.initialize(self, sp, map_object)
+function Door:new(sp, map_object)
+    Door.super.new(self, sp, map_object)
     self.name = "door"
 
     self.an:set_cycle_time(0.15)
@@ -37,7 +37,7 @@ function Door:initialize(sp, map_object)
 end
 
 function Door:update(dt)
-    Entity.update(self, dt)
+    Door.super.update(self, dt)
 
     if self.an.state_cur == "closing"
         and self.an:get_state_progress() == 1 then

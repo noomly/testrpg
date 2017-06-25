@@ -1,7 +1,6 @@
-local SpriteSheet = class("SpriteSheet")
+local SpriteSheet = Object:extend()
 
-
-function SpriteSheet:initialize(image, quad, tile_size_x, tile_size_y)
+function SpriteSheet:new(image, quad, tile_size_x, tile_size_y)
     self.txt = txt
     self.image = image
 
@@ -39,6 +38,5 @@ end
 function SpriteSheet:get_quads_len()
     return { #self.quads, #self.quads[1] }
 end
-
 
 return SpriteSheet

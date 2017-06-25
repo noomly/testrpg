@@ -1,6 +1,6 @@
-local Animate = class("Animate")
+local Animate = Object:extend()
 
-function Animate:initialize(image)
+function Animate:new(image)
     self.image = image
 
     self.state_cur = "default"

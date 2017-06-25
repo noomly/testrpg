@@ -5,12 +5,12 @@ local Mob = require("mob")
 local Player = require("player")
 local Door = require("door")
 
-local StateGame = class("StateGame")
+local StateGame = Object:extend("StateGame")
 
-function StateGame:initialize(level_path)
-    self.world = bump.newWorld()
+function StateGame:new(level_path)
+    self.world = Bump.newWorld()
 
-    self.map = sti("res/lev/level_1.lua", { "bump" })
+    self.map = Sti("res/lev/level_1.lua", { "bump" })
     self.map:bump_init(self.world)
 
     -- local layer_mob = self.map:addCustomLayer("mob", 8)
@@ -18,18 +18,18 @@ function StateGame:initialize(level_path)
 
     local mobs_image = love.graphics.newImage("res/gra/mobs.png")
     local mobs_image_w, mobs_image_h = mobs_image:getDimensions()
-    local mobs_sp = SpriteSheet:new(mobs_image,love.graphics.newQuad(0, 0,
+    local mobs_sp = SpriteSheet(mobs_image,love.graphics.newQuad(0, 0,
             mobs_image_w, mobs_image_h, mobs_image_w, mobs_image_h), 64, 64)
 
     for k, object in pairs(self.map.layers.mob.objects) do
-        local sp = SpriteSheet:new(mobs_image, mobs_sp:get_quad(
+        local sp = SpriteSheet(mobs_image, mobs_sp:get_quad(
             object.properties.imgx, object.properties.imgy), TILE_SIZE_O,
             TILE_SIZE_O)
 
         if object.name == "player" then
-            object.entity = Player:new(sp, object)
+            object.entity = Player(sp, object)
         else
-            object.entity = Mob:new(sp, object)
+            object.entity = Mob(sp, object)
         end
 
         self.world:add(object, unpack(object.entity:get_bb()))
@@ -57,20 +57,20 @@ function StateGame:initialize(level_path)
 
     local objects_image = love.graphics.newImage("res/gra/objects.png")
     local objects_image_w, objects_image_h = objects_image:getDimensions()
-    local objects_sp = SpriteSheet:new(objects_image, love.graphics.newQuad(0,
+    local objects_sp = SpriteSheet(objects_image, love.graphics.newQuad(0,
         0, objects_image_w, objects_image_h, objects_image_w, objects_image_h),
         48, 64)
 
     for k, object in pairs(self.map.layers.interactive.objects) do
         if object.type == "door" then
-            local sp = SpriteSheet:new(objects_image, objects_sp:get_quad(1,
+            local sp = SpriteSheet(objects_image, objects_sp:get_quad(1,
                 1), TILE_SIZE_O, TILE_SIZE_O)
-            object.entity = Door:new(sp, object)
+            object.entity = Door(sp, object)
 
         elseif object.type == "chest" then
-            local sp = SpriteSheet:new(objects_image, objects_sp:get_quad(3, 1),
+            local sp = SpriteSheet(objects_image, objects_sp:get_quad(3, 1),
                 TILE_SIZE_O, TILE_SIZE_O)
-            object.entity = Door:new(sp, object)
+            object.entity = Door(sp, object)
         end
 
         self.world:add(object, unpack(object.entity:get_bb()))
@@ -94,19 +94,19 @@ function StateGame:initialize(level_path)
 
     -- local mobs_image = love.graphics.newImage("res/gra/mobs.png")
     -- local mobs_image_w, mobs_image_h = mobs_image:getDimensions()
-    -- local mobs_sp = SpriteSheet:new(mobs_image,
+    -- local mobs_sp = SpriteSheet(mobs_image,
     --                     love.graphics.newQuad(0, 0, mobs_image_w,
     --                     mobs_image_h, mobs_image_w, mobs_image_h), 64, 64)
 
-    -- local player_sp = SpriteSheet:new(mobs_image,
+    -- local player_sp = SpriteSheet(mobs_image,
     --                                   mobs_sp:get_quad(2, 1), TILE_SIZE_O,
     --                                   TILE_SIZE_O)
-    -- self.player = Player:new(player_sp)
+    -- self.player = Player(player_sp)
 
-    -- local monster_sp = SpriteSheet:new(mobs_image,
+    -- local monster_sp = SpriteSheet(mobs_image,
     --                                    mobs_sp:get_quad(4, 1), TILE_SIZE_O,
     --                                    TILE_SIZE_O)
-    -- self.monster = Mob:new(monster_sp)
+    -- self.monster = Mob(monster_sp)
 
     -- self.world:add(self.player, unpack(self.player:get_bb()))
 
@@ -118,6 +118,10 @@ function StateGame:initialize(level_path)
 end
 
 function StateGame:update(dt)
+    if input:released("toggle_camera") then
+        self.lock_camera = not self.lock_camera
+    end
+
     self.map:update(dt, self.world)
 
     -- self.player:update(dt, self.world)
@@ -130,19 +134,6 @@ function StateGame:update(dt)
         self.camx = x - love.graphics.getWidth() / 2 + TILE_SIZE / 2
         self.camy = y - love.graphics.getHeight() / 2 + TILE_SIZE / 2
     end
-end
-
-function StateGame:keypressed(key, scancode, isrepeat)
-    self.map.layers.mob.objects.player.entity:keypressed(key, scancode,
-        isrepeat)
-
-    if key == "space" then -- TODO: cleanup
-        self.lock_camera = not self.lock_camera
-    end
-end
-
-function StateGame:keyreleased(key, scancode)
-    self.map.layers.mob.objects.player.entity:keyreleased(key, scancode)
 end
 
 function StateGame:draw(dt)
@@ -159,6 +150,5 @@ function StateGame:draw(dt)
         -- self.monster:draw()
     love.graphics.pop()
 end
-
 
 return StateGame

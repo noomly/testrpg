@@ -1,9 +1,9 @@
 local Mob = require("mob")
 
-local Player = class("Player", Mob)
+local Player = Mob:extend()
 
-function Player:initialize(sp, map_object)
-    Mob.initialize(self, sp, map_object)
+function Player:new(sp, map_object)
+    Player.super.new(self, sp, map_object)
     self.name = "player"
 
     self.speed = 80
@@ -12,7 +12,33 @@ function Player:initialize(sp, map_object)
 end
 
 function Player:update(dt, world)
-    Mob.update(self, dt, world)
+    Player.super.update(self, dt, world)
+
+    local _, current_move_value = self:_get_move_max()
+
+    if input:pressed("left") then
+        self.move.left = current_move_value + 1
+    elseif input:pressed("right") then
+        self.move.right = current_move_value + 1
+    elseif input:pressed("up") then
+        self.move.up = current_move_value + 1
+    elseif input:pressed("down") then
+        self.move.down = current_move_value + 1
+    end
+
+    if input:released("left") then
+        self.move.left = 0
+    elseif input:released("right") then
+        self.move.right = 0
+    elseif input:released("up") then
+        self.move.up = 0
+    elseif input:released("down") then
+        self.move.down = 0
+    end
+
+    if input:released("interact") then
+        self.interact = true
+    end
 
     if self.interact then
         self.interact = false
@@ -47,31 +73,31 @@ end
 function Player:keypressed(key, scancode, isrepeat)
     local _, current_move_value = self:_get_move_max()
 
-    if key == "left" then
-        self.move.left = current_move_value + 1
-    elseif key == "right" then
-        self.move.right = current_move_value + 1
-    elseif key == "up" then
-        self.move.up = current_move_value + 1
-    elseif key == "down" then
-        self.move.down = current_move_value + 1
-    end
+    -- if key == "left" then
+    --     self.move.left = current_move_value + 1
+    -- elseif key == "right" then
+    --     self.move.right = current_move_value + 1
+    -- elseif key == "up" then
+    --     self.move.up = current_move_value + 1
+    -- elseif key == "down" then
+    --     self.move.down = current_move_value + 1
+    -- end
 end
 
 function Player:keyreleased(key, scancode)
-    if key == "left" then
-        self.move.left = 0
-    elseif key == "right" then
-        self.move.right = 0
-    elseif key == "up" then
-        self.move.up = 0
-    elseif key == "down" then
-        self.move.down = 0
-    end
+    -- if key == "left" then
+    --     self.move.left = 0
+    -- elseif key == "right" then
+    --     self.move.right = 0
+    -- elseif key == "up" then
+    --     self.move.up = 0
+    -- elseif key == "down" then
+    --     self.move.down = 0
+    -- end
 
-    if key == "return" then
-        self.interact = true
-    end
+    -- if key == "return" then
+    --     self.interact = true
+    -- end
 end
 
 function Player:collide(cols)
@@ -92,6 +118,5 @@ end
 --         return "slide"
 --     end
 -- end
-
 
 return Player

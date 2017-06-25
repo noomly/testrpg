@@ -1,8 +1,8 @@
 local Animate = require("animate")
 
-local Entity = class("Entity")
+local Entity = Object:extend("Entity")
 
-function Entity:initialize(sp, map_object)
+function Entity:new(sp, map_object)
     self.name = "entity"
 
     self.sp = sp
@@ -13,7 +13,7 @@ function Entity:initialize(sp, map_object)
     self.bb = { x = map_object.x, y = map_object.y, w = TILE_SIZE_O,
         h = TILE_SIZE_O }
 
-    self.an = Animate:new(self.sp:get_image())
+    self.an = Animate(self.sp:get_image())
 end
 
 function Entity:update(dt)

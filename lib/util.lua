@@ -1,4 +1,4 @@
-local Util = class('Util')
+local Util = Object:extend()
 
 function Util.rprint(s, l, i) -- recursive Print (structure, limit, indent)
     l = (l) or 100; i = i or "";	-- default item limit, indent string
