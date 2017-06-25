@@ -136,7 +136,7 @@ function StateGame:update(dt)
     end
 end
 
-function StateGame:draw(dt)
+function StateGame:draw()
     love.graphics.push()
         love.graphics.translate(-self.camx, -self.camy)
         love.graphics.clear()

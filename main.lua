@@ -23,7 +23,7 @@ local game
 
 
 function love.load()
-    -- CScreen.init(800, 600, false)
+    CScreen.init(800, 600, false)
 
     love.graphics.setDefaultFilter("nearest", "nearest", 1)
 
@@ -44,10 +44,10 @@ function love.update(dt)
     game:update(dt)
 end
 
-function love.draw(dt)
+function love.draw()
     CScreen.apply()
 
-    game:draw(dt)
+    game:draw()
     --local radius = 20
     --love.graphics.circle("line", love.graphics.getWidth() / 2,
     --    love.graphics.getHeight() / 2, radius)
