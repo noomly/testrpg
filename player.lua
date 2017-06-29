@@ -9,7 +9,7 @@ function Player:new(sp, map_object)
     Player.super.new(self, sp, map_object)
     self.name = "player"
 
-    self.speed = 80
+    self.speed = 0.2
 
     self.interact = false
 end

@@ -9,7 +9,7 @@ function Mob:new(sp, map_object)
     Mob.super.new(self, sp, map_object)
     self.name = "mob"
 
-    self.speed = 32
+    self.speed = 1
 
     self.move = { left = 0, right = 0, up = 0, down = 0 }
     self.moving = "standing" -- standing, left, right, up, down
@@ -115,7 +115,7 @@ function Mob:update(dt, world)
     end
 
     if moving ~= "standing" then
-        move_px = self.speed * dt
+        move_px = (TILE_SIZE_O / self.speed) * dt
 
         if self.moving_px + move_px > TILE_SIZE_O then
             move_px = TILE_SIZE_O - self.moving_px
@@ -175,6 +175,18 @@ function Mob:collide(cols)
     -- Doing nothing, extend me in subclasses
 end
 
+--- Collision filter
+-- @param item
+-- @param other Things that got collided with self
+-- @return "slide" or nil Collide or not
+function Mob.col_filter(item, other)
+    if other.type == "door" and other.properties.open then
+        return nil
+    else
+        return "slide"
+    end
+end
+
 --- Get the most relevant movement corresponding to pressed the key(s) pressed
 --- this is to keep some history on the order the keys have been pressed
 -- @return move_key, move_value Movement
@@ -194,18 +206,6 @@ function Mob:_get_move_max()
     end
 
     return move_key, move_value
-end
-
---- Collision filter
--- @param item
--- @param other Things that got collided with self
--- @return "slide" or nil Collide or not
-function Mob.col_filter(item, other)
-    if other.type == "door" and other.properties.open then
-        return nil
-    else
-        return "slide"
-    end
 end
 
 return Mob
