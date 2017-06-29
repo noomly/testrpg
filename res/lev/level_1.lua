@@ -8,7 +8,7 @@ return {
   height = 20,
   tilewidth = 16,
   tileheight = 16,
-  nextobjectid = 76,
+  nextobjectid = 78,
   properties = {},
   tilesets = {
     {
@@ -81,6 +81,23 @@ return {
         {
           id = 47,
           terrain = { 0, 0, 0, 0 }
+        },
+        {
+          id = 131,
+          animation = {
+            {
+              tileid = 131,
+              duration = 100
+            },
+            {
+              tileid = 132,
+              duration = 100
+            },
+            {
+              tileid = 133,
+              duration = 100
+            }
+          }
         }
       }
     },
@@ -182,7 +199,7 @@ return {
       },
       encoding = "base64",
       compression = "zlib",
-      data = "eJylVDEOwjAM9Ar0A2FmyQ4SD+AJiImMsLEBjwjwAj6LK8XisOw0ESed7Lrp2bWTRCIKzFi4BIsMEA8Ql+8CrOmBaFgQ3R6dWn6pewoDc6Y4OHpefXvmofhziF+YJxXLxUp/La0RZ0OPIJbpOxfRk/oesPbKvDHvjt7ayTHVX6wFsXP0av17gr8AkvJ1fa37ZcTLiK1UfXoeVs3yjL2xeuXtv56aEXIW/0UE23t+tQaiNt9WbMDHuyIxjwZ7gP1LxvtEbf3YFovzRb13JYcH2cuS3/rXml42Yvqe1/e7vA/0e8/HypoPUrsaXw=="
+      data = "eJylVDEOwjAM9Ar0A2FmyQ4SD+AJiKkZYWMDXsAU4AV8FleKxWHZaSNOOtl107NrJ4lEFJixcAkWGSAeIC7fBVjTAtGwILotOrX8UvcYOuZMsXP0vPr2zEPx5xA/M48qlouV/lpaA06GHkEs03cuoif1PWDthXll3hy9tZNjrL9YC2Ln6NX69wR/ASTl6/qm7pcBr2LvEFup+vQ8rJrlGXtj9crbfy01I+Qs/osItvX8ag1Ebb5TsQEf74rE7A22APuXjPeJpvVjWyzOF/XelRweZC9Lfutfa3rZiOl7Xt/v8j7Q7z0fK2s+/boa4w=="
     },
     {
       type = "objectgroup",
@@ -213,7 +230,7 @@ return {
         {
           id = 64,
           name = "monster1",
-          type = "",
+          type = "enemy",
           shape = "rectangle",
           x = 112,
           y = 160,
@@ -284,6 +301,19 @@ return {
           properties = {
             ["collidable"] = true
           }
+        },
+        {
+          id = 76,
+          name = "spikeeey",
+          type = "trap",
+          shape = "rectangle",
+          x = 256,
+          y = 96,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {}
         }
       }
     }

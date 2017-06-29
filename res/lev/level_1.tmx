@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="76">
+<map version="1.0" orientation="orthogonal" renderorder="right-down" width="20" height="20" tilewidth="16" tileheight="16" nextobjectid="78">
  <tileset firstgid="1" name="basic tileset" tilewidth="16" tileheight="16" tilecount="192" columns="16">
   <image source="../gra/basictiles.png" width="256" height="192"/>
   <terraintypes>
@@ -16,6 +16,13 @@
   <tile id="40" terrain="1,1,1,1"/>
   <tile id="46" terrain="0,0,0,0"/>
   <tile id="47" terrain="0,0,0,0"/>
+  <tile id="131">
+   <animation>
+    <frame tileid="131" duration="100"/>
+    <frame tileid="132" duration="100"/>
+    <frame tileid="133" duration="100"/>
+   </animation>
+  </tile>
  </tileset>
  <tileset firstgid="193" name="collisions tileset" tilewidth="16" tileheight="16" tilecount="16" columns="4">
   <image source="../gra/collisions.png" width="64" height="64"/>
@@ -50,7 +57,7 @@
    <property name="collidable" type="bool" value="true"/>
   </properties>
   <data encoding="base64" compression="zlib">
-   eJylVDEOwjAM9Ar0A2FmyQ4SD+AJiImMsLEBjwjwAj6LK8XisOw0ESed7Lrp2bWTRCIKzFi4BIsMEA8Ql+8CrOmBaFgQ3R6dWn6pewoDc6Y4OHpefXvmofhziF+YJxXLxUp/La0RZ0OPIJbpOxfRk/oesPbKvDHvjt7ayTHVX6wFsXP0av17gr8AkvJ1fa37ZcTLiK1UfXoeVs3yjL2xeuXtv56aEXIW/0UE23t+tQaiNt9WbMDHuyIxjwZ7gP1LxvtEbf3YFovzRb13JYcH2cuS3/rXml42Yvqe1/e7vA/0e8/HypoPUrsaXw==
+   eJylVDEOwjAM9Ar0A2FmyQ4SD+AJiKkZYWMDXsAU4AV8FleKxWHZaSNOOtl107NrJ4lEFJixcAkWGSAeIC7fBVjTAtGwILotOrX8UvcYOuZMsXP0vPr2zEPx5xA/M48qlouV/lpaA06GHkEs03cuoif1PWDthXll3hy9tZNjrL9YC2Ln6NX69wR/ASTl6/qm7pcBr2LvEFup+vQ8rJrlGXtj9crbfy01I+Qs/osItvX8ag1Ebb5TsQEf74rE7A22APuXjPeJpvVjWyzOF/XelRweZC9Lfutfa3rZiOl7Xt/v8j7Q7z0fK2s+/boa4w==
   </data>
  </layer>
  <objectgroup color="#0000ff" name="mob">
@@ -60,7 +67,7 @@
     <property name="imgy" type="int" value="1"/>
    </properties>
   </object>
-  <object id="64" name="monster1" x="112" y="160" width="16" height="16">
+  <object id="64" name="monster1" type="enemy" x="112" y="160" width="16" height="16">
    <properties>
     <property name="imgx" type="int" value="4"/>
     <property name="imgy" type="int" value="1"/>
@@ -84,5 +91,6 @@
     <property name="collidable" type="bool" value="true"/>
    </properties>
   </object>
+  <object id="76" name="spikeeey" type="trap" x="256" y="96" width="16" height="16"/>
  </objectgroup>
 </map>

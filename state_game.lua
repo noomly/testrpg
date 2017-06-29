@@ -4,6 +4,7 @@ local Entity = require("entity")
 local Mob = require("mob")
 local Player = require("player")
 local Door = require("door")
+local Trap = require("trap")
 
 local StateGame = Object:extend("StateGame")
 
@@ -12,9 +13,6 @@ function StateGame:new(level_path)
 
     self.map = Sti("res/lev/level_1.lua", { "bump" })
     self.map:bump_init(self.world)
-
-    -- local layer_mob = self.map:addCustomLayer("mob", 8)
-    -- layer_mob.objects = {}
 
     local mobs_image = love.graphics.newImage("res/gra/mobs.png")
     local mobs_image_w, mobs_image_h = mobs_image:getDimensions()
@@ -71,46 +69,37 @@ function StateGame:new(level_path)
             local sp = SpriteSheet(objects_image, objects_sp:get_quad(3, 1),
                 TILE_SIZE_O, TILE_SIZE_O)
             object.entity = Door(sp, object)
+
+        elseif object.type == "trap" then
+            -- local sp = SpriteSheet(objects_image, objects_sp:get_quad(3, 2),
+            --     TILE_SIZE_O, TILE_SIZE_O)
+            -- object.entity = Trap(sp, object)
         end
 
-        self.world:add(object, unpack(object.entity:get_bb()))
+        if object.entity then
+            self.world:add(object, unpack(object.entity:get_bb()))
+        end
     end
 
     self.map.layers.interactive.update = function(self, dt)
         for _, object in pairs(self.objects) do
-            object.entity:update(dt)
+            if object.entity then
+                object.entity:update(dt)
+            end
         end
     end
 
     self.map.layers.interactive.draw = function(self)
         for _, object in pairs(self.objects) do
-            object.entity:draw()
+            if object.entity then
+                object.entity:draw()
+            end
         end
     end
 
-
-    -- print(inspect(self.map.objects))
-    -- print(self.map.objects[61].layer)
-
-    -- local mobs_image = love.graphics.newImage("res/gra/mobs.png")
-    -- local mobs_image_w, mobs_image_h = mobs_image:getDimensions()
-    -- local mobs_sp = SpriteSheet(mobs_image,
-    --                     love.graphics.newQuad(0, 0, mobs_image_w,
-    --                     mobs_image_h, mobs_image_w, mobs_image_h), 64, 64)
-
-    -- local player_sp = SpriteSheet(mobs_image,
-    --                                   mobs_sp:get_quad(2, 1), TILE_SIZE_O,
-    --                                   TILE_SIZE_O)
-    -- self.player = Player(player_sp)
-
-    -- local monster_sp = SpriteSheet(mobs_image,
-    --                                    mobs_sp:get_quad(4, 1), TILE_SIZE_O,
-    --                                    TILE_SIZE_O)
-    -- self.monster = Mob(monster_sp)
-
-    -- self.world:add(self.player, unpack(self.player:get_bb()))
-
-    -- self.world:add(self.monster, unpack(self.monster:get_bb()))
+    local x, y, _, _ = self.map.layers.mob.objects.player.entity:get_pos()
+    self.camera = Camera()
+    self.camera:zoomTo(TILE_SIZE / TILE_SIZE_O)
 
     self.camx = 1
     self.camy = 1
@@ -124,31 +113,28 @@ function StateGame:update(dt)
 
     self.map:update(dt, self.world)
 
-    -- self.player:update(dt, self.world)
-    -- self.monster:update(dt, self.world)
-
     local cam_speed = 200
 
-    local x, y = unpack(self.map.layers.mob.objects.player.entity:get_simg())
+    local x, y = self.map.layers.mob.objects.player.entity:get_pos()
+    x = x + TILE_SIZE_O / 2
+    y = y + TILE_SIZE_O / 2
+
     if not self.lock_camera then
-        self.camx = x - love.graphics.getWidth() / 2 + TILE_SIZE / 2
-        self.camy = y - love.graphics.getHeight() / 2 + TILE_SIZE / 2
+        self.camera:lookAt(x, y)
     end
 end
 
 function StateGame:draw()
-    love.graphics.push()
-        love.graphics.translate(-self.camx, -self.camy)
-        love.graphics.clear()
-        love.graphics.setBlendMode("alpha")
-        love.graphics.scale(TILE_SIZE / TILE_SIZE_O, TILE_SIZE / TILE_SIZE_O)
+    self.camera:attach()
 
-        self.map:draw()
-        -- self.map:bump_draw(self.world)
+    self.map:draw()
+    -- self.map:bump_draw(self.world)
 
-        -- self.player:draw()
-        -- self.monster:draw()
-    love.graphics.pop()
+    self.camera:detach()
+end
+
+function StateGame:resize(width, height)
+    self.map:resize(width, height)
 end
 
 return StateGame

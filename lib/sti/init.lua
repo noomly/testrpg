@@ -699,7 +699,7 @@ end
 --- Animate Tiles and update every Layer
 -- @param dt Delta Time
 -- @return nil
-function Map:update(dt, optional_args) -- optional_args is a patch writtent by Eyal Chojnowski
+function Map:update(dt, optional_args) -- optional_args is a patch written by Eyal Chojnowski
     for _, tile in pairs(self.tiles) do
         local update = false
 
@@ -730,10 +730,11 @@ end
 
 --- Draw every Layer
 -- @return nil
-function Map:draw()
-    local current_canvas = lg.getCanvas()
-    lg.setCanvas(self.canvas)
-    lg.clear()
+function Map:draw() -- Patched by Eyal Chojnowski
+    -- every lines with -- could be commented for STI to work better with CScreen
+    local current_canvas = lg.getCanvas() --
+    lg.setCanvas(self.canvas) --
+    lg.clear() --
 
     for _, layer in ipairs(self.layers) do
         if layer.visible and layer.opacity > 0 then
@@ -741,11 +742,11 @@ function Map:draw()
         end
     end
 
-    lg.setCanvas(current_canvas)
-    lg.push()
-    lg.origin()
-    lg.draw(self.canvas)
-    lg.pop()
+    lg.setCanvas(current_canvas) --
+    lg.push() --
+    lg.origin() --
+    lg.draw(self.canvas) --
+    lg.pop() --
 end
 
 --- Draw an individual Layer

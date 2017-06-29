@@ -4,16 +4,17 @@ Inspect = require("lib/inspect")
 Util = require("lib/util")
 Bump = require("lib/bump")
 Sti = require("lib/sti")
+Camera = require("lib/hump/camera")
+CS = require("lib/cscreen")
 
 -- import local libs
-local CScreen = require("lib/cscreen")
 
 -- Import local classes
 local StateGame = require("state_game")
 
 -- Define constants
-TILE_SIZE_O = 16
-TILE_SIZE = 64
+TILE_SIZE_O = 16    -- Original tile size
+TILE_SIZE = 64      -- Size we want to be rendered
 
 -- Define global variables
 input = nil
@@ -23,9 +24,12 @@ local game
 
 
 function love.load()
-    CScreen.init(800, 600, false)
+    CS.init(800, 600, true)
+    CS.setColor(0, 255, 0)
 
     love.graphics.setDefaultFilter("nearest", "nearest", 1)
+    love.graphics.setBackgroundColor(255, 0, 0)
+    -- love.graphics.setBlendMode("alpha")
 
     game = StateGame("res/lev/level_1")
 
@@ -45,18 +49,16 @@ function love.update(dt)
 end
 
 function love.draw()
-    CScreen.apply()
+    CS.apply()
 
     game:draw()
-    --local radius = 20
-    --love.graphics.circle("line", love.graphics.getWidth() / 2,
-    --    love.graphics.getHeight() / 2, radius)
-    --love.graphics.points(love.graphics.getWidth()/2, love.graphics.getHeight()/2)
 
-    CScreen.cease()
+    CS.cease()
 end
 
 function love.resize(width, height)
-    CScreen.update(width, height)
+    CS.update(width, height)
+
+    game:resize(width, height)
 end
 

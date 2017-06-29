@@ -16,6 +16,8 @@ function Mob:new(sp, map_object)
 
     self.facing = "south"
 
+    self.standing_on = nil -- object
+
     self.an:set_states({
         default = { { 2, 1 } },
         walk_left = {
@@ -181,11 +183,6 @@ function Mob:_get_move_max()
     end
 
     return move_key, move_value
-end
-
-function Mob:get_simg() -- Get scaled image position
-    return { self.bb.x * (TILE_SIZE / TILE_SIZE_O),
-             self.bb.y * (TILE_SIZE / TILE_SIZE_O) }
 end
 
 function Mob.col_filter(item, other)

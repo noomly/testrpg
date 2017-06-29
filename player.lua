@@ -14,31 +14,7 @@ end
 function Player:update(dt, world)
     Player.super.update(self, dt, world)
 
-    local _, current_move_value = self:_get_move_max()
-
-    if input:pressed("left") then
-        self.move.left = current_move_value + 1
-    elseif input:pressed("right") then
-        self.move.right = current_move_value + 1
-    elseif input:pressed("up") then
-        self.move.up = current_move_value + 1
-    elseif input:pressed("down") then
-        self.move.down = current_move_value + 1
-    end
-
-    if input:released("left") then
-        self.move.left = 0
-    elseif input:released("right") then
-        self.move.right = 0
-    elseif input:released("up") then
-        self.move.up = 0
-    elseif input:released("down") then
-        self.move.down = 0
-    end
-
-    if input:released("interact") then
-        self.interact = true
-    end
+    self:_manage_input()
 
     if self.interact then
         self.interact = false
@@ -70,42 +46,45 @@ function Player:update(dt, world)
     end
 end
 
-function Player:keypressed(key, scancode, isrepeat)
+function Player:_manage_input()
     local _, current_move_value = self:_get_move_max()
 
-    -- if key == "left" then
-    --     self.move.left = current_move_value + 1
-    -- elseif key == "right" then
-    --     self.move.right = current_move_value + 1
-    -- elseif key == "up" then
-    --     self.move.up = current_move_value + 1
-    -- elseif key == "down" then
-    --     self.move.down = current_move_value + 1
-    -- end
-end
+    if input:pressed("left") then
+        self.move.left = current_move_value + 1
+    end
+    if input:pressed("right") then
+        self.move.right = current_move_value + 1
+    end
+    if input:pressed("up") then
+        self.move.up = current_move_value + 1
+    end
+    if input:pressed("down") then
+        self.move.down = current_move_value + 1
+    end
 
-function Player:keyreleased(key, scancode)
-    -- if key == "left" then
-    --     self.move.left = 0
-    -- elseif key == "right" then
-    --     self.move.right = 0
-    -- elseif key == "up" then
-    --     self.move.up = 0
-    -- elseif key == "down" then
-    --     self.move.down = 0
-    -- end
+    if input:released("left") then
+        self.move.left = 0
+    end
+    if input:released("right") then
+        self.move.right = 0
+    end
+    if input:released("up") then
+        self.move.up = 0
+    end
+    if input:released("down") then
+        self.move.down = 0
+    end
 
-    -- if key == "return" then
-    --     self.interact = true
-    -- end
+    if input:released("interact") then
+        self.interact = true
+    end
 end
 
 function Player:collide(cols)
-    -- print(inspect(cols[1]))
-    -- print(inspect(cols[1].other))
-    if cols[1].other.name == "door" then
-        -- print("door!")
-        cols[1].other.properties.collidable = false
+    if cols[1].other.type == "enemy" then
+        print("Ouch! It hurts!")
+    elseif cols[1].other.type == "trap" then
+        cols[1].other.entity:trigger()
     end
 end
 

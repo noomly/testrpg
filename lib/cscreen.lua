@@ -49,9 +49,11 @@ function CScreen.cease()
 		love.graphics.scale(fsvr, fsvr)
 
 		if tx ~= 0 then
+            -- print("tx", tx, fsv)
 			love.graphics.rectangle("fill", -tx, 0, tx, rhf)
 			love.graphics.rectangle("fill", rxv, 0, tx, rhf)
 		elseif ty ~= 0 then
+            -- print("ty", ty)
 			love.graphics.rectangle("fill", 0, -ty, rwf, ty)
 			love.graphics.rectangle("fill", 0, ryv, rwf, ty)
 		end
@@ -91,7 +93,10 @@ end
 
 -- Convert from window coordinates to target coordinates
 function CScreen.project(x, y)
-	return math.floor((x - tx) / fsv), math.floor((y - ty) / fsv)
+    -- print("txty", tx, ty)
+	return math.floor((x - tx) / fsv), math.floor((y - ty) / fsv) -- original
+	-- return math.floor((x - (tx))), math.floor((y - ty))
+	-- return math.floor(x + tx), math.floor(y - ty)
 end
 
 -- Change letterbox color

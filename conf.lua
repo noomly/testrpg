@@ -16,7 +16,7 @@ function love.conf(t)
     t.window.minheight      = 1
     t.window.fullscreen     = false
     t.window.fullscreentype = "exclusive"
-    t.window.vsync          = false
+    t.window.vsync          = true
     t.window.msaa           = 0
     t.window.display        = 1
     t.window.highdpi        = false
