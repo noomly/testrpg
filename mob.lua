@@ -2,6 +2,9 @@ local Entity = require("entity")
 
 local Mob = Entity:extend()
 
+--- Instance a new Mob
+-- @param sp SpriteSheet object
+-- @param map_object Object from STI
 function Mob:new(sp, map_object)
     Mob.super.new(self, sp, map_object)
     self.name = "mob"
@@ -57,6 +60,9 @@ function Mob:new(sp, map_object)
     })
 end
 
+--- Update
+-- @param dt DeltaTime
+-- @param world World object
 function Mob:update(dt, world)
     Mob.super.update(self, dt)
 
@@ -163,10 +169,15 @@ function Mob:update(dt, world)
     end
 end
 
+--- Collide event
+-- @param cols Things involved in the event
 function Mob:collide(cols)
     -- Doing nothing, extend me in subclasses
 end
 
+--- Get the most relevant movement corresponding to pressed the key(s) pressed
+--- this is to keep some history on the order the keys have been pressed
+-- @return move_key, move_value Movement
 function Mob:_get_move_max()
     local move_key = 0
     local move_value = -math.huge
@@ -185,6 +196,10 @@ function Mob:_get_move_max()
     return move_key, move_value
 end
 
+--- Collision filter
+-- @param item
+-- @param other Things that got collided with self
+-- @return "slide" or nil Collide or not
 function Mob.col_filter(item, other)
     if other.type == "door" and other.properties.open then
         return nil

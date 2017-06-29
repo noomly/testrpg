@@ -2,6 +2,9 @@ local Entity = require("entity")
 
 local Door = Entity:extend()
 
+--- Instance a new Door
+-- @param sp SpriteSheet object
+-- @param map_object Object from STI
 function Door:new(sp, map_object)
     Door.super.new(self, sp, map_object)
     self.name = "door"
@@ -36,6 +39,8 @@ function Door:new(sp, map_object)
     end
 end
 
+--- Update
+-- @param dt DeltaTime
 function Door:update(dt)
     Door.super.update(self, dt)
 
@@ -48,6 +53,7 @@ function Door:update(dt)
     end
 end
 
+--- Open or close the door depending on its current state
 function Door:toggle()
     if self.map_object.properties.open then
         self.map_object.properties.open = false

@@ -1,3 +1,8 @@
+-- /!\
+-- THIS IS NO LONGER USED
+-- TODO: remove this file in a future commit
+
+
 local Level = class("Level")
 
 -- 15 lines in spritesheet

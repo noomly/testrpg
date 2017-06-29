@@ -8,6 +8,8 @@ local Trap = require("trap")
 
 local StateGame = Object:extend("StateGame")
 
+--- Instance a new StateGame
+-- @param level_path
 function StateGame:new(level_path)
     self.world = Bump.newWorld()
 
@@ -106,6 +108,8 @@ function StateGame:new(level_path)
     self.lock_camera = false
 end
 
+--- Update
+-- @param dt DeltaTime
 function StateGame:update(dt)
     if input:released("toggle_camera") then
         self.lock_camera = not self.lock_camera
@@ -124,6 +128,7 @@ function StateGame:update(dt)
     end
 end
 
+--- Draw
 function StateGame:draw()
     self.camera:attach()
 
@@ -133,6 +138,9 @@ function StateGame:draw()
     self.camera:detach()
 end
 
+--- Resize event
+-- @param width
+-- @param height
 function StateGame:resize(width, height)
     self.map:resize(width, height)
 end

@@ -2,6 +2,9 @@ local Mob = require("mob")
 
 local Player = Mob:extend()
 
+--- Instance a new Player
+-- @param sp SpriteSheet object
+-- @param map_object Object from STI
 function Player:new(sp, map_object)
     Player.super.new(self, sp, map_object)
     self.name = "player"
@@ -11,6 +14,9 @@ function Player:new(sp, map_object)
     self.interact = false
 end
 
+--- Update
+-- @param dt DeltaTime
+-- @param world World object
 function Player:update(dt, world)
     Player.super.update(self, dt, world)
 
@@ -46,6 +52,7 @@ function Player:update(dt, world)
     end
 end
 
+--- Manage input
 function Player:_manage_input()
     local _, current_move_value = self:_get_move_max()
 
@@ -80,6 +87,8 @@ function Player:_manage_input()
     end
 end
 
+--- Collide event
+-- @param cols Things involved in the event
 function Player:collide(cols)
     if cols[1].other.type == "enemy" then
         print("Ouch! It hurts!")

@@ -1,5 +1,10 @@
 local SpriteSheet = Object:extend()
 
+--- Instance a new SpriteSheet
+-- @param image Image of the tileset
+-- @param quad Portion of the image
+-- @param tile_size_x Width of the tiles
+-- @param tile_sizey Height of the tiles
 function SpriteSheet:new(image, quad, tile_size_x, tile_size_y)
     self.txt = txt
     self.image = image
@@ -26,15 +31,20 @@ function SpriteSheet:new(image, quad, tile_size_x, tile_size_y)
     end
 end
 
+--- Get image of the SpriteSheet
+-- @return image
 function SpriteSheet:get_image()
     return self.image
 end
 
-
+--- Get a tile's quad
+-- @return quad
 function SpriteSheet:get_quad(x, y)
     return self.quads[x][y]
 end
 
+--- Get width and height of the main quad
+-- @return { w, h }
 function SpriteSheet:get_quads_len()
     return { #self.quads, #self.quads[1] }
 end

@@ -2,6 +2,9 @@ local Entity = require("entity")
 
 local Trap = Entity:extend()
 
+--- Instance a new Trap
+-- @param sp SpriteSheet object
+-- @param map_object Object from STI
 function Trap:new(sp, map_object)
     Trap.super.new(self, sp, map_object)
     self.name = "trap"
@@ -34,6 +37,8 @@ function Trap:new(sp, map_object)
     end
 end
 
+--- Update
+-- @param dt DeltaTime
 function Trap:update(dt)
     Trap.super.update(self, dt)
 
@@ -46,6 +51,7 @@ function Trap:update(dt)
     end
 end
 
+--- Trigger the trap
 function Trap:trigger()
     if self.map_object.properties.open then
         self.map_object.properties.open = false
