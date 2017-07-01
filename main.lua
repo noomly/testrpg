@@ -28,7 +28,7 @@ function love.load()
     CS.setColor(0, 255, 0)
 
     love.graphics.setDefaultFilter("nearest", "nearest", 1)
-    love.graphics.setBackgroundColor(255, 0, 0)
+    love.graphics.setBackgroundColor(255, 0, 255)
     -- love.graphics.setBlendMode("alpha")
 
     game = StateGame("res/lev/level_1")

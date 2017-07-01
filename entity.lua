@@ -27,8 +27,10 @@ end
 
 --- Draw
 function Entity:draw()
-    love.graphics.draw(self.sp:get_image(),
-        self.sp:get_quad(unpack(self.an:get_quad_cur())), self:get_pos())
+    if self.sp then
+        love.graphics.draw(self.sp:get_image(),
+            self.sp:get_quad(unpack(self.an:get_quad_cur())), self:get_pos())
+    end
 end
 
 --- Get bounding box

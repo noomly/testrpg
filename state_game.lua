@@ -1,8 +1,10 @@
 -- Import local classes
 local SpriteSheet = require("spritesheet")
+
 local Entity = require("entity")
 local Mob = require("mob")
 local Player = require("player")
+
 local Door = require("door")
 local Trap = require("trap")
 
@@ -10,10 +12,69 @@ local StateGame = Object:extend("StateGame")
 
 --- Instance a new StateGame
 -- @param level_path
-function StateGame:new(level_path)
+function StateGame:new(level_name)
+    -- self:_load_map(level_name)
+    self:_load_map("level_1")
+
+    local x, y, _, _ = self.map.layers.mob.objects.player.entity:get_pos()
+    self.camera = Camera()
+    self.camera:zoomTo(TILE_SIZE / TILE_SIZE_O)
+
+    self.camx = 1
+    self.camy = 1
+    self.lock_camera = false
+end
+
+--- Update
+-- @param dt DeltaTime
+function StateGame:update(dt)
+    if input:released("toggle_camera") then
+        self.lock_camera = not self.lock_camera
+    end
+
+    self.map:update(dt, self.world)
+
+    local teleporting = self.map.layers.mob.objects.player.entity:get_teleporting()
+    if teleporting then
+        print("Teleporting to map " .. teleporting .. "!")
+        self:_load_map(teleporting)
+    end
+
+    local cam_speed = 200
+
+    local x, y = self.map.layers.mob.objects.player.entity:get_pos()
+    x = x + TILE_SIZE_O / 2
+    y = y + TILE_SIZE_O / 2
+
+    if not self.lock_camera then
+        self.camera:lookAt(x, y)
+    end
+end
+
+--- Draw
+function StateGame:draw()
+    self.camera:attach()
+
+    self.map:draw()
+
+    -- self.map:bump_draw(self.world)
+
+    self.camera:detach()
+end
+
+--- Resize event
+-- @param width
+-- @param height
+function StateGame:resize(width, height)
+    self.map:resize(width, height)
+end
+
+--- Load map
+-- @param level_path
+function StateGame:_load_map(level_name)
     self.world = Bump.newWorld()
 
-    self.map = Sti("res/lev/level_1.lua", { "bump" })
+    self.map = Sti("res/lev/" .. level_name .. ".lua", { "bump" })
     self.map:bump_init(self.world)
 
     local mobs_image = love.graphics.newImage("res/gra/mobs.png")
@@ -76,6 +137,9 @@ function StateGame:new(level_path)
             -- local sp = SpriteSheet(objects_image, objects_sp:get_quad(3, 2),
             --     TILE_SIZE_O, TILE_SIZE_O)
             -- object.entity = Trap(sp, object)
+
+        elseif object.type == "teleporter" then
+            object.entity = Entity(nil, object)
         end
 
         if object.entity then
@@ -98,51 +162,6 @@ function StateGame:new(level_path)
             end
         end
     end
-
-    local x, y, _, _ = self.map.layers.mob.objects.player.entity:get_pos()
-    self.camera = Camera()
-    self.camera:zoomTo(TILE_SIZE / TILE_SIZE_O)
-
-    self.camx = 1
-    self.camy = 1
-    self.lock_camera = false
-end
-
---- Update
--- @param dt DeltaTime
-function StateGame:update(dt)
-    if input:released("toggle_camera") then
-        self.lock_camera = not self.lock_camera
-    end
-
-    self.map:update(dt, self.world)
-
-    local cam_speed = 200
-
-    local x, y = self.map.layers.mob.objects.player.entity:get_pos()
-    x = x + TILE_SIZE_O / 2
-    y = y + TILE_SIZE_O / 2
-
-    if not self.lock_camera then
-        self.camera:lookAt(x, y)
-    end
-end
-
---- Draw
-function StateGame:draw()
-    self.camera:attach()
-
-    self.map:draw()
-    -- self.map:bump_draw(self.world)
-
-    self.camera:detach()
-end
-
---- Resize event
--- @param width
--- @param height
-function StateGame:resize(width, height)
-    self.map:resize(width, height)
 end
 
 return StateGame

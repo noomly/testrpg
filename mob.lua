@@ -17,9 +17,11 @@ function Mob:new(sp, map_object)
     self.move_wait = 0
     self.move_wait_total = 0.083 -- secs
 
+    self.moved_event_queue = false -- hacky thing to help detecting Mob:moved() event
+
     self.facing = "south"
 
-    self.standing_on = nil -- object
+    self.stand_on = nil -- object
 
     self.an:set_states({
         default = { { 2, 1 } },
@@ -65,6 +67,29 @@ end
 -- @param world World object
 function Mob:update(dt, world)
     Mob.super.update(self, dt)
+
+    if self.moving == "standing" then
+        self.stand_on = nil
+
+        local items, len = world:queryPoint(self.bb.x + 1, self.bb.y + 1)
+
+        for _, value in pairs(items) do
+            if value ~= self.map_object then
+                if self.stand_on == nil then
+                    self.stand_on = {}
+                end
+
+                table.insert(self.stand_on, value)
+            end
+        end
+
+        if self.moved_event_queue then
+            self.moved_event_queue = false
+            self:moved()
+        end
+    else
+        self.moved_event_queue = true
+    end
 
     local move_key, _ = self:_get_move_max()
 
@@ -169,22 +194,28 @@ function Mob:update(dt, world)
     end
 end
 
+--- Collision filter
+-- @param item
+-- @param other Things that got collided with self
+-- @return "slide" or nil Collide or not
+function Mob.col_filter(item, other)
+    if other.type == "teleporter" then
+        return nil
+    elseif other.type == "door" and other.properties.open then
+        return nil
+    else
+        return "slide"
+    end
+end
+
 --- Collide event
 -- @param cols Things involved in the event
 function Mob:collide(cols)
     -- Doing nothing, extend me in subclasses
 end
 
---- Collision filter
--- @param item
--- @param other Things that got collided with self
--- @return "slide" or nil Collide or not
-function Mob.col_filter(item, other)
-    if other.type == "door" and other.properties.open then
-        return nil
-    else
-        return "slide"
-    end
+--- Moved event
+function Mob:moved()
 end
 
 --- Get the most relevant movement corresponding to pressed the key(s) pressed

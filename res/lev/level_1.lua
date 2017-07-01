@@ -8,7 +8,7 @@ return {
   height = 20,
   tilewidth = 16,
   tileheight = 16,
-  nextobjectid = 78,
+  nextobjectid = 84,
   properties = {},
   tilesets = {
     {
@@ -181,7 +181,7 @@ return {
       properties = {},
       encoding = "base64",
       compression = "zlib",
-      data = "eJxjYBgF1AT5VDbPZxCbZ0tF8+yhZgVQyTyQWX5EqCM2voj150CqsyOghpT48oeqJYSpFV+jYGgCAGVeCQM="
+      data = "eJxjYBgF1AT5OMSryTTPh1yH0ME8WyqaZw81K4BK5oHM8iNCHa74wmbeYFdnR0ANKfHlD1VLCFMrvoYysBhoBwwgAADwZAm2"
     },
     {
       type = "tilelayer",
@@ -199,7 +199,7 @@ return {
       },
       encoding = "base64",
       compression = "zlib",
-      data = "eJylVDEOwjAM9Ar0A2FmyQ4SD+AJiKkZYWMDXsAU4AV8FleKxWHZaSNOOtl107NrJ4lEFJixcAkWGSAeIC7fBVjTAtGwILotOrX8UvcYOuZMsXP0vPr2zEPx5xA/M48qlouV/lpaA06GHkEs03cuoif1PWDthXll3hy9tZNjrL9YC2Ln6NX69wR/ASTl6/qm7pcBr2LvEFup+vQ8rJrlGXtj9crbfy01I+Qs/osItvX8ag1Ebb5TsQEf74rE7A22APuXjPeJpvVjWyzOF/XelRweZC9Lfutfa3rZiOl7Xt/v8j7Q7z0fK2s+/boa4w=="
+      data = "eJylVDEOwjAM9Ar0A2FmyQ4/4AmIiYywsQEvYCrwAj6LK8XisOy0Fied7Lrp2bWTZCJKzFy5BItMEE8Ql+8SrIlANCyIbkSnlV/qHkPHnCl2jp5X3465r/4c4mfmUcX6aqW/ltaAk6FHEOvpOxfRk/oesPbCvDJvjt7ayTHWX6wFsXX0Wv17gr8AkvJ1fVP3y4BXtXeIrVR9eh5WzfKMvbF65e2/SM0IOYv/IoONnl+tgWjNdyo24ONdUZgHgxFg/4rxvlCsHzhf1Hs3cniQvSz5rX9t6fVGTN/z+n6X94l+7/ncWPMBxpoaqw=="
     },
     {
       type = "objectgroup",
@@ -216,8 +216,8 @@ return {
           name = "player",
           type = "",
           shape = "rectangle",
-          x = 176,
-          y = 96,
+          x = 160,
+          y = 64,
           width = 16,
           height = 16,
           rotation = 0,
@@ -292,7 +292,7 @@ return {
           name = "chest1",
           type = "chest",
           shape = "rectangle",
-          x = 160,
+          x = 176,
           y = 64,
           width = 16,
           height = 16,
@@ -314,6 +314,21 @@ return {
           rotation = 0,
           visible = true,
           properties = {}
+        },
+        {
+          id = 78,
+          name = "stair down",
+          type = "teleporter",
+          shape = "rectangle",
+          x = 160,
+          y = 64,
+          width = 16,
+          height = 16,
+          rotation = 0,
+          visible = true,
+          properties = {
+            ["destination"] = "level1_under"
+          }
         }
       }
     }

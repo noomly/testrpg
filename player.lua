@@ -11,6 +11,8 @@ function Player:new(sp, map_object)
 
     self.speed = 0.2
 
+    self._teleporting = nil
+
     self.interact = false
 end
 
@@ -97,14 +99,21 @@ function Player:collide(cols)
     end
 end
 
--- function Player.col_filter(item, other)
---     if other.name == "door" and other.properties.open then
---         return nil
---     elseif other.name == "chest" then
---         return "slide"
---     else
---         return "slide"
---     end
--- end
+--- Moved event
+function Player:moved()
+    if self.stand_on and self.stand_on[1].type == "teleporter" then
+        self._teleporting = self.stand_on[1].properties.destination
+    end
+end
+
+function Player:get_teleporting()
+    local tel = self._teleporting
+
+    if tel then
+        self._teleporting = nil
+    end
+
+    return tel
+end
 
 return Player
